@@ -1,0 +1,191 @@
+---
+/**
+ * Base — layout racine de la flotte BotDiscordFactory.
+ *
+ * Pose <html lang data-bot>, charge les fontes Google (Sora, Plus Jakarta Sans,
+ * JetBrains Mono), importe les tokens, applique le reset et expose les
+ * primitives globales partagées (.bdf-wrap, .bdf-btn, .bdf-overline, .bdf-section,
+ * anneau de focus, halo ambient). Les composants consomment ces primitives.
+ *
+ * `bot` rebinde l'accent de TOUTE la page via [data-bot] sur <html> ; chaque
+ * composant peut toujours surcharger localement avec son propre data-bot.
+ *
+ * @prop {string} title - <title> du document. Requis.
+ * @prop {string} [description] - Meta description.
+ * @prop {('moodioos'|'renamioos'|'coverioos'|'collabioos')} [bot] - Accent global
+ *   de la page. Absent = identité flotte (Moodioos lead par défaut des tokens).
+ * @prop {string} [lang='fr'] - Langue du document.
+ * @prop {boolean} [ambient=true] - Affiche le halo de lumière de fond.
+ * @prop {string} [bodyClass] - Classes additionnelles sur <body>.
+ * @slot head - Injection dans le <head> (meta, preload, OG…).
+ * @slot default - Contenu de la page (Nav, main, Footer…).
+ */
+import "@bdf/design/tokens.css";
+
+interface Props {
+  title: string;
+  description?: string;
+  bot?: "moodioos" | "renamioos" | "coverioos" | "collabioos";
+  lang?: string;
+  ambient?: boolean;
+  bodyClass?: string;
+}
+
+const {
+  title,
+  description,
+  bot,
+  lang = "fr",
+  ambient = true,
+  bodyClass = "",
+} = Astro.props;
+
+const FONTS_HREF =
+  "https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap";
+---
+
+<!doctype html>
+<html lang={lang} data-bot={bot}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={FONTS_HREF} />
+
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    {ambient && <div class="bdf-ambient" aria-hidden="true"></div>}
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  /* --- Reset ------------------------------------------------------------- */
+  *, *::before, *::after { box-sizing: border-box; }
+  * { margin: 0; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+
+  body {
+    font-family: var(--font-body);
+    font-size: var(--fs-md);
+    line-height: var(--lh-normal);
+    color: var(--c-ink-500);
+    background: var(--c-paper-50);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    color: var(--c-ink-900);
+    line-height: var(--lh-snug);
+    letter-spacing: var(--ls-tight);
+    font-weight: var(--fw-semibold);
+  }
+  a { color: inherit; text-decoration: none; }
+  img, svg { display: block; max-width: 100%; }
+
+  /* --- Halo de lumière de fond (gradients à peine perceptibles) ---------- */
+  .bdf-ambient {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-bg);
+    pointer-events: none;
+    background:
+      radial-gradient(60% 50% at 78% -8%, var(--c-glow-peach) 0%, transparent 60%),
+      radial-gradient(48% 44% at 8% 12%, var(--c-glow-lilac) 0%, transparent 55%),
+      radial-gradient(55% 60% at 60% 110%, var(--c-glow-pink) 0%, transparent 58%);
+    opacity: 0.85;
+  }
+
+  /* --- Primitives de mise en page ---------------------------------------- */
+  .bdf-wrap {
+    width: 100%;
+    max-width: var(--container-max);
+    margin-inline: auto;
+    padding-inline: var(--container-pad);
+  }
+  .bdf-section { padding-block: var(--section-y); position: relative; }
+  .bdf-section__head { max-width: 60ch; margin-bottom: var(--sp-7); }
+  .bdf-section__title { font-size: clamp(1.9rem, 4vw, var(--fs-3xl)); margin-top: var(--sp-3); }
+  .bdf-section__sub {
+    margin-top: var(--sp-4);
+    font-size: var(--fs-lg);
+    color: var(--c-ink-500);
+    line-height: var(--lh-relaxed);
+  }
+
+  .bdf-overline {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--accent-600);
+    font-weight: var(--fw-medium);
+    display: inline-block;
+  }
+
+  /* --- Bouton ------------------------------------------------------------ */
+  .bdf-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-family: var(--font-body);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-sm);
+    color: #fff;
+    background: var(--accent-500);
+    padding: var(--sp-3) var(--sp-5);
+    border-radius: var(--r-pill);
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transition: transform var(--dur-base) var(--ease-spring),
+      box-shadow var(--dur-base) var(--ease-soft),
+      background var(--dur-fast) var(--ease-soft);
+    will-change: transform;
+  }
+  .bdf-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg), var(--glow-accent); }
+  .bdf-btn:active { transform: translateY(0); }
+  .bdf-btn--lg { font-size: var(--fs-md); padding: var(--sp-4) var(--sp-6); }
+  .bdf-btn--ghost {
+    color: var(--c-ink-700);
+    background: var(--c-paper-0);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--c-line);
+  }
+  .bdf-btn--ghost:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+  /* --- Focus visible (toujours visible, contrasté) ----------------------- */
+  :where(a, button, input, select, textarea, [tabindex]):focus-visible {
+    outline: none;
+    box-shadow: var(--ring);
+    border-radius: var(--r-sm);
+  }
+
+  /* --- Reveal au scroll (utilitaire, géré par script appelant si voulu) -- */
+  .bdf-reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity var(--dur-slow) var(--ease-soft), transform var(--dur-slow) var(--ease-soft);
+  }
+  .bdf-reveal.is-in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .bdf-reveal { opacity: 1; transform: none; }
+  }
+</style>
