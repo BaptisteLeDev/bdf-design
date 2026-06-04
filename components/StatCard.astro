@@ -9,20 +9,27 @@
  * @prop {string} [unit] - Suffixe/unité accentué accolé (ex. "k", "M", "%").
  * @prop {string} [label] - Libellé descriptif sous le chiffre.
  * @prop {string} [overline] - Sur-titre mono en majuscules (ex. "Serveurs").
+ * @prop {string} [valueId] - id pose sur l'élément du chiffre, pour injecter une
+ *   valeur live côté client (stats fetchées). Le texte initial reste `value`
+ *   (placeholder / rendu sans JS).
+ * @prop {string} [overlineKey] - Pose `data-i18n` sur le sur-titre, hook pour un
+ *   script d'i18n côté client (multilingue). N'impose aucune logique au DS.
  */
 interface Props {
   value: string;
   unit?: string;
   label?: string;
   overline?: string;
+  valueId?: string;
+  overlineKey?: string;
 }
 
-const { value, unit, label, overline } = Astro.props;
+const { value, unit, label, overline, valueId, overlineKey } = Astro.props;
 ---
 
 <div class="bdf-stat">
-  {overline && <span class="bdf-stat__overline">{overline}</span>}
-  <div class="bdf-stat__num">{value}{unit && <small>{unit}</small>}</div>
+  {overline && <span class="bdf-stat__overline" data-i18n={overlineKey}>{overline}</span>}
+  <div class="bdf-stat__num"><span id={valueId}>{value}</span>{unit && <small>{unit}</small>}</div>
   {label && <p class="bdf-stat__label">{label}</p>}
 </div>
 

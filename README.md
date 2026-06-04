@@ -175,12 +175,14 @@ Slot : default (description).
 
 ### `components/StatCard.astro`
 
-| Prop       | Type                  | Défaut |
-| ---------- | --------------------- | ------ |
-| `value`    | `string` **(requis)** | —      |
-| `unit`     | `string`              | —      |
-| `label`    | `string`              | —      |
-| `overline` | `string`              | —      |
+| Prop         | Type                  | Défaut | Rôle                                              |
+| ------------ | --------------------- | ------ | ------------------------------------------------- |
+| `value`      | `string` **(requis)** | —      | chiffre principal (placeholder si valeur live)    |
+| `unit`       | `string`              | —      | suffixe accentué (ex. `k`, `M`, `%`)              |
+| `label`      | `string`              | —      | libellé sous le chiffre                           |
+| `overline`   | `string`              | —      | sur-titre mono                                    |
+| `valueId`    | `string`              | —      | `id` sur le chiffre, pour injection live (client) |
+| `overlineKey`| `string`              | —      | `data-i18n` sur le sur-titre (hook i18n client)   |
 
 ### `components/CommandCard.astro`
 
