@@ -198,8 +198,9 @@
   /* Lueur accent diffuse — dérivée du rôle, donc suit le bot actif. */
   --glow-accent: 0 18px 48px -12px var(--accent-300);
 
-  /* Anneau de focus accessible (toujours visible, contrasté). */
-  --ring: 0 0 0 3px var(--c-paper-0), 0 0 0 5.5px var(--accent-500);
+  /* Anneau de focus accessible (toujours visible, contrasté ≥3:1 sur paper —
+     d'où --accent-600 et non -500, qui échouait pour moodioos / coverioos). */
+  --ring: 0 0 0 3px var(--c-paper-0), 0 0 0 5.5px var(--accent-600);
 }
 
 /* =============================================================================

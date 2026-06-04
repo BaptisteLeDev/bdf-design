@@ -147,8 +147,10 @@ const FONTS_HREF =
     font-family: var(--font-body);
     font-weight: var(--fw-semibold);
     font-size: var(--fs-sm);
+    /* Texte blanc sur l'accent : on remplit en --accent-600 (et non -500) pour
+       garantir le contraste AA (#fff sur -500 échouait pour les 4 accents). */
     color: #fff;
-    background: var(--accent-500);
+    background: var(--accent-600);
     padding: var(--sp-3) var(--sp-5);
     border-radius: var(--r-pill);
     border: none;

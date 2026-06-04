@@ -43,9 +43,11 @@ const { overline, title, decor = true } = Astro.props;
     position: relative;
     overflow: hidden;
     border-radius: var(--r-xl);
+    /* Plancher du dégradé = --accent-300 (et non -500) : le texte foncé
+       --accent-ink garde un contraste AA (≥4.5:1) sur tout le bandeau. */
     background:
       radial-gradient(80% 120% at 15% 0%, color-mix(in srgb, #fff 50%, var(--accent-200)), transparent 55%),
-      linear-gradient(135deg, var(--accent-300), var(--accent-500));
+      linear-gradient(135deg, var(--accent-200), var(--accent-300));
     box-shadow: var(--shadow-xl);
     padding: clamp(2rem, 6vw, var(--sp-9));
     text-align: center;
@@ -58,7 +60,8 @@ const { overline, title, decor = true } = Astro.props;
     margin-top: var(--sp-3);
   }
   .bdf-cta__lead {
-    color: color-mix(in srgb, var(--accent-ink) 82%, transparent);
+    /* Texte plein (pas de transparence) pour rester AA sur le dégradé. */
+    color: var(--accent-ink);
     font-size: var(--fs-lg);
     margin-top: var(--sp-4);
     line-height: var(--lh-relaxed);
