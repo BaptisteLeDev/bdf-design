@@ -15,7 +15,12 @@
  * @prop {{label:string, href:string, current?:boolean}[]} [links=[]] - Liens de nav.
  * @prop {{label:string, href:string}} [cta] - Bouton d'action à droite.
  * @prop {('solid'|'ghost')} [ctaVariant='solid'] - Style du bouton CTA.
+ * @prop {boolean} [ctaExternal] - Force target="_blank" rel="noopener noreferrer"
+ *   sur le CTA. Si absent, auto-détecté pour les URLs externes (http(s)://...).
  * @prop {string} [ariaLabel='Navigation principale']
+ * @slot actions - Contrôles additionnels alignés à droite, AVANT le CTA (ex.
+ *   sélecteur de langue). Vivent dans le flux de la nav, donc jamais en conflit
+ *   de superposition avec le CTA.
  */
 interface NavLink {
   label: string;
@@ -30,6 +35,7 @@ interface Props {
   links?: NavLink[];
   cta?: { label: string; href: string };
   ctaVariant?: "solid" | "ghost";
+  ctaExternal?: boolean;
   ariaLabel?: string;
 }
 
@@ -41,8 +47,13 @@ const {
   links = [],
   cta,
   ctaVariant = "solid",
+  ctaExternal,
   ariaLabel = "Navigation principale",
 } = Astro.props;
+
+/** Liens externes : ouverts dans un nouvel onglet, sans fuite via tabnabbing. */
+const isExternal = (url?: string): boolean => !!url && /^https?:\/\//i.test(url);
+const ctaIsExternal = ctaExternal ?? isExternal(cta?.href);
 ---
 
 <header class="bdf-nav" data-bdf-nav>
@@ -60,11 +71,19 @@ const {
       </nav>
     )}
 
-    {cta && (
-      <a class:list={["bdf-btn", { "bdf-btn--ghost": ctaVariant === "ghost" }]} href={cta.href}>
-        {cta.label}
-      </a>
-    )}
+    <div class="bdf-nav__actions">
+      <slot name="actions" />
+      {cta && (
+        <a
+          class:list={["bdf-btn", { "bdf-btn--ghost": ctaVariant === "ghost" }]}
+          href={cta.href}
+          target={ctaIsExternal ? "_blank" : undefined}
+          rel={ctaIsExternal ? "noopener noreferrer" : undefined}
+        >
+          {cta.label}
+        </a>
+      )}
+    </div>
   </div>
 </header>
 
@@ -118,9 +137,19 @@ const {
       var(--bot-collabioos-300)
     );
   }
+  /* Zone d'actions à droite : slot (ex. sélecteur de langue) + CTA, dans le flux.
+     Aligne et espace ses enfants ; aucun overlay fixe, donc aucune collision. */
+  .bdf-nav__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  /* Liens de nav : visibles à TOUS les breakpoints (resserrés sur mobile) plutôt
+     que masqués sous 820px. Évite la perte du lien de nav sur mobile sans recourir
+     à un overlay hamburger (ceremony pour des ancres internes courtes). */
   .bdf-nav__links {
-    display: none;
-    gap: var(--sp-6);
+    display: inline-flex;
+    gap: var(--sp-4);
     font-size: var(--fs-sm);
     font-weight: var(--fw-medium);
   }
@@ -132,7 +161,12 @@ const {
   .bdf-nav__links a:hover,
   .bdf-nav__links a[aria-current="page"] { color: var(--c-ink-900); }
   @media (min-width: 820px) {
-    .bdf-nav__links { display: inline-flex; }
+    .bdf-nav__links { gap: var(--sp-6); }
+  }
+  /* Très petits écrans : on masque le mark de marque texte au profit du glyphe
+     si l'espace manque — mais on garde brand + lien(s) + CTA accessibles. */
+  @media (max-width: 360px) {
+    .bdf-nav__links { gap: var(--sp-3); font-size: var(--fs-xs); }
   }
 </style>
 
