@@ -93,6 +93,8 @@ en reposant `data-bot` sur un conteneur (c'est ce que fait `<BotCard>`).
 | `collabioos` | vert sauge          | feuille                        |
 
 Chaque accent expose une rampe `100 / 200 / 300 / 500 / 600 + -ink` (cf. `ARCHITECTURE.md`).
+Le palier `-600` garantit le contraste AA (≥ 4.5:1) pour du texte posé sur `paper-0`, `paper-50`
+**et** `paper-100`. Le palier `-ink` est l'accent foncé pour du texte sur surface accent (`-100`).
 
 ## Composants (API publique)
 

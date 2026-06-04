@@ -15,7 +15,8 @@
                        système est invariant.
 
    Invariant dur : AUCUNE couleur en dur hors de ce fichier. Contraste AA garanti
-   par les paliers -600 / -ink prévus pour le texte sur surfaces claires.
+   par les paliers -600 (texte sur paper-0/-50/-100, ≥4.5:1 vérifié pour les 4 bots)
+   et -ink (texte sur surface accent -100).
    ============================================================================= */
 
 :root {
@@ -52,7 +53,7 @@
   --bot-moodioos-200: #ffd2cb;
   --bot-moodioos-300: #fdb0a4;
   --bot-moodioos-500: #ef7d72;
-  --bot-moodioos-600: #c2493f;  /* AA (≥4.5:1) sur --c-paper-0 / -50 */
+  --bot-moodioos-600: #b8443a;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.27 / 5.07 / 4.72 */
   --bot-moodioos-ink: #6e261f;
 
   /* ReNamioos — stylisation Unicode — lavande / lilas (← lavande #F3E5F5 saturé) */
@@ -60,7 +61,7 @@
   --bot-renamioos-200: #e0cdee;
   --bot-renamioos-300: #c6a9df;
   --bot-renamioos-500: #9b6fc9;
-  --bot-renamioos-600: #794aa6;  /* AA sur paper */
+  --bot-renamioos-600: #794aa6;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 6.19 / 5.96 / 5.54 */
   --bot-renamioos-ink: #45286a;
 
   /* Coverioos — Undercover (jeu) — doré / ambre (← doré #FFD97D raffiné) */
@@ -68,7 +69,7 @@
   --bot-coverioos-200: #f8dfa6;
   --bot-coverioos-300: #efc466;
   --bot-coverioos-500: #cf9a23;
-  --bot-coverioos-600: #946b12;  /* AA sur paper (l'or pur ne passe pas en texte) */
+  --bot-coverioos-600: #8c640f;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.25 / 5.05 / 4.69 */
   --bot-coverioos-ink: #553c08;
 
   /* Collabioos — collab streamers — vert sauge (nouveau, harmonisé chaud) */
@@ -76,7 +77,7 @@
   --bot-collabioos-200: #cfe2c9;
   --bot-collabioos-300: #a7c79c;
   --bot-collabioos-500: #6f9c5f;
-  --bot-collabioos-600: #4d7740;  /* AA sur paper */
+  --bot-collabioos-600: #4d7740;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.14 / 4.95 / 4.60 */
   --bot-collabioos-ink: #2e4a25;
 
   /* --- États sémantiques (désaturés, dans la palette douce) --------------- */
