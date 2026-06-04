@@ -17,8 +17,10 @@
   ],
   "exports": {
     "./tokens.css": "./tokens/tokens.css",
-    "./components/*": "./components/*.astro",
-    "./layouts/*": "./layouts/*.astro"
+    "./components/*": "./components/*",
+    "./components/*.astro": "./components/*.astro",
+    "./layouts/*": "./layouts/*",
+    "./layouts/*.astro": "./layouts/*.astro"
   },
   "peerDependencies": {
     "astro": ">=4.0.0 <6.0.0"

@@ -84,7 +84,7 @@
   --c-positive-text: #2f6f4d;   /* texte sur --c-positive-100 (AA) */
   --c-positive-100: #e6f1ea;
   --c-warning: #cf9a23;         /* aligné sur l'ambre coverioos */
-  --c-warning-text: #946b12;    /* texte sur --c-warning-100 (AA) */
+  --c-warning-text: #7d5a0e;    /* texte sur --c-warning-100 (AA, 5.5:1) */
   --c-warning-100: #fcf0d4;
   --c-danger: #d35b53;
   --c-danger-text: #a83b34;     /* texte sur --c-danger-100 (AA) */
