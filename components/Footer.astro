@@ -37,6 +37,9 @@ const {
   legal,
   version,
 } = Astro.props;
+
+/** Liens externes : nouvel onglet + rel anti-tabnabbing (parité site d'origine). */
+const isExternal = (url: string): boolean => /^https?:\/\//i.test(url);
 ---
 
 <footer class="bdf-footer">
@@ -54,7 +57,13 @@ const {
         <h4>{col.title}</h4>
         <ul>
           {col.links.map((l) => (
-            <li><a href={l.href}>{l.label}</a></li>
+            <li>
+              <a
+                href={l.href}
+                target={isExternal(l.href) ? "_blank" : undefined}
+                rel={isExternal(l.href) ? "noopener noreferrer" : undefined}
+              >{l.label}</a>
+            </li>
           ))}
         </ul>
       </div>
