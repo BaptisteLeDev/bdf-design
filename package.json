@@ -1,0 +1,26 @@
+{
+  "name": "@bdf/design",
+  "version": "0.1.0",
+  "description": "Design system de la flotte BotDiscordFactory (-ioos). Tokens CSS + composants Astro soft premium, un accent par bot via [data-bot].",
+  "type": "module",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": "BaptisteLeDev",
+  "sideEffects": [
+    "*.css",
+    "*.astro"
+  ],
+  "files": [
+    "tokens",
+    "components",
+    "layouts"
+  ],
+  "exports": {
+    "./tokens.css": "./tokens/tokens.css",
+    "./components/*": "./components/*.astro",
+    "./layouts/*": "./layouts/*.astro"
+  },
+  "peerDependencies": {
+    "astro": ">=4.0.0 <6.0.0"
+  }
+}
