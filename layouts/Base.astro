@@ -59,6 +59,7 @@ const FONTS_HREF =
     <slot name="head" />
   </head>
   <body class={bodyClass}>
+    <a class="bdf-skip" href="#main">Aller au contenu</a>
     {ambient && <div class="bdf-ambient" aria-hidden="true"></div>}
     <slot />
   </body>
@@ -179,6 +180,26 @@ const FONTS_HREF =
     box-shadow: var(--ring);
     border-radius: var(--r-sm);
   }
+
+  /* --- Lien d'évitement (WCAG 2.4.1) ------------------------------------- */
+  /* Premier élément focusable de la page : masqué jusqu'au focus clavier,
+     puis posé en haut à gauche pour sauter directement à <main id="main">. */
+  .bdf-skip {
+    position: absolute;
+    left: var(--sp-4);
+    top: calc(-1 * var(--sp-10));
+    z-index: calc(var(--z-nav) + 1); /* au-dessus de la nav sticky */
+    padding: var(--sp-3) var(--sp-5);
+    background: var(--c-paper-0);
+    color: var(--c-ink-900);
+    font-family: var(--font-body);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-sm);
+    border-radius: var(--r-pill);
+    box-shadow: var(--shadow-md);
+    transition: top var(--dur-fast) var(--ease-soft);
+  }
+  .bdf-skip:focus { top: var(--sp-4); }
 
   /* --- Reveal au scroll (utilitaire, géré par script appelant si voulu) -- */
   .bdf-reveal {
