@@ -1,0 +1,70 @@
+---
+/**
+ * CommandCard — carte de commande slash (glyphe + nom mono + description).
+ *
+ * Pensée pour vivre dans un <CommandGrid>. Le glyphe adopte la forme `--bot-blob`
+ * et se « range » (rayon régulier) au survol. Consomme l'accent du contexte
+ * [data-bot] ancêtre.
+ *
+ * @prop {string} name - Nom de la commande, affiché en mono (ex. "/mood").
+ * @prop {string} glyph - Emoji/glyphe de la commande.
+ * @slot default - Description de la commande.
+ */
+interface Props {
+  name: string;
+  glyph: string;
+}
+
+const { name, glyph } = Astro.props;
+---
+
+<article class="bdf-cmd">
+  <div class="bdf-cmd__head">
+    <span class="bdf-cmd__glyph" aria-hidden="true">{glyph}</span>
+    <span class="bdf-cmd__name">{name}</span>
+  </div>
+  <p class="bdf-cmd__desc"><slot /></p>
+</article>
+
+<style>
+  .bdf-cmd {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    padding: var(--sp-6);
+    background: var(--c-paper-0);
+    border: 1px solid var(--c-line);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-xs);
+    transition: transform var(--dur-base) var(--ease-soft),
+      box-shadow var(--dur-base) var(--ease-soft),
+      border-color var(--dur-base);
+  }
+  .bdf-cmd:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent-200);
+  }
+  .bdf-cmd__head { display: flex; align-items: center; gap: var(--sp-3); }
+  .bdf-cmd__glyph {
+    width: 42px;
+    height: 42px;
+    flex: none;
+    border-radius: var(--bot-blob);
+    background: color-mix(in srgb, var(--accent-100) 70%, var(--c-paper-0));
+    border: 1px solid var(--accent-200);
+    display: grid;
+    place-items: center;
+    font-size: 1.25rem;
+    transition: border-radius var(--dur-slow) var(--ease-spring);
+  }
+  .bdf-cmd:hover .bdf-cmd__glyph { border-radius: var(--r-md); }
+  .bdf-cmd__name {
+    font-family: var(--font-mono);
+    font-size: var(--fs-md);
+    font-weight: var(--fw-medium);
+    color: var(--accent-600);
+  }
+  .bdf-cmd__desc { font-size: var(--fs-sm); color: var(--c-ink-500); line-height: var(--lh-relaxed); }
+</style>

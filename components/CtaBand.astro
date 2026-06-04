@@ -1,0 +1,93 @@
+---
+/**
+ * CtaBand — bandeau d'appel à l'action, fond accent dégradé + blobs flottants.
+ *
+ * Le texte est posé en `--accent-ink` (foncé, AA garanti sur le dégradé clair de
+ * l'accent du bot actif). Les blobs décoratifs flottent (désactivé sous
+ * prefers-reduced-motion).
+ *
+ * @prop {string} [overline] - Sur-titre mono (rendu en --accent-ink).
+ * @prop {string} title - Titre du bandeau (h2). Requis.
+ * @prop {boolean} [decor=true] - Affiche les blobs décoratifs flottants.
+ * @slot lead - Paragraphe sous le titre.
+ * @slot actions - Boutons d'action (utiliser .bdf-btn pour le style accent-ink).
+ */
+interface Props {
+  overline?: string;
+  title: string;
+  decor?: boolean;
+}
+
+const { overline, title, decor = true } = Astro.props;
+---
+
+<div class="bdf-cta">
+  {decor && (
+    <>
+      <span class="bdf-cta__decor bdf-cta__decor--1" aria-hidden="true"></span>
+      <span class="bdf-cta__decor bdf-cta__decor--2" aria-hidden="true"></span>
+    </>
+  )}
+  <div class="bdf-cta__inner">
+    {overline && <span class="bdf-overline bdf-cta__overline">{overline}</span>}
+    <h2 class="bdf-cta__title">{title}</h2>
+    {Astro.slots.has("lead") && <p class="bdf-cta__lead"><slot name="lead" /></p>}
+    {Astro.slots.has("actions") && (
+      <div class="bdf-cta__actions"><slot name="actions" /></div>
+    )}
+  </div>
+</div>
+
+<style>
+  .bdf-cta {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--r-xl);
+    background:
+      radial-gradient(80% 120% at 15% 0%, color-mix(in srgb, #fff 50%, var(--accent-200)), transparent 55%),
+      linear-gradient(135deg, var(--accent-300), var(--accent-500));
+    box-shadow: var(--shadow-xl);
+    padding: clamp(2rem, 6vw, var(--sp-9));
+    text-align: center;
+  }
+  .bdf-cta__inner { position: relative; z-index: 1; max-width: 52ch; margin-inline: auto; }
+  .bdf-cta__overline { color: var(--accent-ink); }
+  .bdf-cta__title {
+    color: var(--accent-ink);
+    font-size: clamp(1.8rem, 4.5vw, var(--fs-3xl));
+    margin-top: var(--sp-3);
+  }
+  .bdf-cta__lead {
+    color: color-mix(in srgb, var(--accent-ink) 82%, transparent);
+    font-size: var(--fs-lg);
+    margin-top: var(--sp-4);
+    line-height: var(--lh-relaxed);
+  }
+  .bdf-cta__actions {
+    margin-top: var(--sp-6);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3);
+    justify-content: center;
+  }
+  /* Bouton sur fond accent : inverse en --accent-ink (contraste fort). */
+  .bdf-cta__actions :global(.bdf-btn) { background: var(--accent-ink); }
+  .bdf-cta__actions :global(.bdf-btn:hover) { box-shadow: var(--shadow-lg); }
+
+  .bdf-cta__decor {
+    position: absolute;
+    border-radius: var(--bot-blob);
+    background: rgba(255, 255, 255, 0.22);
+    animation: bdf-cta-float var(--dur-float) var(--ease-inout) infinite;
+    will-change: transform;
+  }
+  .bdf-cta__decor--1 { width: 120px; height: 120px; top: -30px; right: 8%; }
+  .bdf-cta__decor--2 { width: 80px; height: 80px; bottom: -24px; left: 12%; animation-delay: -3s; }
+  @keyframes bdf-cta-float {
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -12px, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bdf-cta__decor { animation: none; }
+  }
+</style>

@@ -1,0 +1,111 @@
+---
+/**
+ * Hero — section d'en-tête à deux colonnes (texte + visuel blob).
+ *
+ * Structure : overline · titre · chapeau · actions à gauche ; visuel à droite.
+ * Le titre et le chapeau passent par des slots pour autoriser la mise en valeur
+ * (ex. `<em>` dégradé). Le visuel par défaut est un slot `visual` (souvent un
+ * amas de <BlobShape> ou une <BlobShape float>).
+ *
+ * @prop {string} [overline] - Sur-titre mono en majuscules (accent du bot actif).
+ * @prop {('default'|'gradient')} [titleStyle='default'] - 'gradient' applique le
+ *   dégradé multi-bots de la flotte au contenu marqué `<em>` dans le slot title.
+ * @prop {('start'|'center')} [align='start'] - Alignement du bloc texte.
+ * @slot title - Titre principal (h1). Requis.
+ * @slot lead - Chapeau (paragraphe d'intro).
+ * @slot actions - Boutons / liens d'action.
+ * @slot visual - Visuel de droite (blobs). aria-hidden conseillé côté appelant.
+ */
+interface Props {
+  overline?: string;
+  titleStyle?: "default" | "gradient";
+  align?: "start" | "center";
+}
+
+const { overline, titleStyle = "default", align = "start" } = Astro.props;
+const hasVisual = Astro.slots.has("visual");
+---
+
+<section class:list={["bdf-hero", { "bdf-hero--solo": !hasVisual }]}>
+  <div class:list={["bdf-wrap", "bdf-hero__grid", { "bdf-hero__grid--solo": !hasVisual }]}>
+    <div class:list={["bdf-hero__copy", `bdf-hero__copy--${align}`, { "bdf-hero__title--gradient": titleStyle === "gradient" }]}>
+      {overline && <span class="bdf-overline">{overline}</span>}
+      <h1 class="bdf-hero__title"><slot name="title" /></h1>
+      {Astro.slots.has("lead") && <p class="bdf-hero__lead"><slot name="lead" /></p>}
+      {Astro.slots.has("actions") && (
+        <div class="bdf-hero__actions"><slot name="actions" /></div>
+      )}
+    </div>
+
+    {hasVisual && (
+      <div class="bdf-hero__art">
+        <slot name="visual" />
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .bdf-hero {
+    position: relative;
+    padding-top: var(--sp-9);
+    padding-bottom: var(--sp-8);
+  }
+  .bdf-hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-7);
+    align-items: center;
+  }
+  @media (min-width: 940px) {
+    .bdf-hero__grid:not(.bdf-hero__grid--solo) {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: var(--sp-8);
+    }
+  }
+  .bdf-hero__copy--center { text-align: center; margin-inline: auto; max-width: 64ch; }
+  .bdf-hero__copy--center .bdf-hero__lead { margin-inline: auto; }
+  .bdf-hero__copy--center .bdf-hero__actions { justify-content: center; }
+
+  .bdf-hero__title {
+    font-size: clamp(2.6rem, 7vw, var(--fs-5xl));
+    letter-spacing: var(--ls-display);
+    line-height: var(--lh-tight);
+    font-weight: var(--fw-bold);
+    margin-top: var(--sp-4);
+  }
+  /* Le slot title peut contenir <em> mis en valeur via le dégradé flotte. */
+  .bdf-hero__title--gradient :global(em) {
+    font-style: normal;
+    background: linear-gradient(
+      100deg,
+      var(--bot-moodioos-600),
+      var(--bot-renamioos-600) 50%,
+      var(--bot-coverioos-600)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bdf-hero__lead {
+    font-size: var(--fs-lg);
+    line-height: var(--lh-relaxed);
+    color: var(--c-ink-500);
+    max-width: 46ch;
+    margin-top: var(--sp-5);
+  }
+  .bdf-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+    margin-top: var(--sp-6);
+  }
+  .bdf-hero__art {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 460px;
+    margin-inline: auto;
+  }
+</style>

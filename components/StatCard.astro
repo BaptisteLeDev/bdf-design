@@ -1,0 +1,71 @@
+---
+/**
+ * StatCard — carte de statistique (gros chiffre + libellé + sur-titre).
+ *
+ * Le chiffre accepte une unité/suffixe accentué (ex. "86" + "k", "99.97" + "%").
+ * Halo accent discret en coin. Consomme l'accent du contexte [data-bot] ancêtre.
+ *
+ * @prop {string} value - Le chiffre principal (ex. "1 240", "86", "99.97").
+ * @prop {string} [unit] - Suffixe/unité accentué accolé (ex. "k", "M", "%").
+ * @prop {string} [label] - Libellé descriptif sous le chiffre.
+ * @prop {string} [overline] - Sur-titre mono en majuscules (ex. "Serveurs").
+ */
+interface Props {
+  value: string;
+  unit?: string;
+  label?: string;
+  overline?: string;
+}
+
+const { value, unit, label, overline } = Astro.props;
+---
+
+<div class="bdf-stat">
+  {overline && <span class="bdf-stat__overline">{overline}</span>}
+  <div class="bdf-stat__num">{value}{unit && <small>{unit}</small>}</div>
+  {label && <p class="bdf-stat__label">{label}</p>}
+</div>
+
+<style>
+  .bdf-stat {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding: var(--sp-6);
+    border-radius: var(--r-lg);
+    background: var(--c-paper-0);
+    border: 1px solid var(--c-line);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--dur-base) var(--ease-soft),
+      box-shadow var(--dur-base) var(--ease-soft);
+  }
+  .bdf-stat::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: -50% -30% auto auto;
+    width: 70%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle at 30% 30%, var(--accent-100), transparent 70%);
+  }
+  .bdf-stat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .bdf-stat__overline {
+    font-family: var(--font-mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: var(--accent-600);
+    display: block;
+  }
+  .bdf-stat__num {
+    font-family: var(--font-display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-3xl);
+    color: var(--c-ink-900);
+    letter-spacing: var(--ls-display);
+    line-height: 1;
+    margin-top: var(--sp-3);
+  }
+  .bdf-stat__num small { font-size: var(--fs-xl); color: var(--accent-600); }
+  .bdf-stat__label { margin-top: var(--sp-3); font-size: var(--fs-sm); color: var(--c-ink-500); }
+</style>

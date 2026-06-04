@@ -1,0 +1,34 @@
+---
+/**
+ * CommandGrid — grille responsive pour les <CommandCard>.
+ *
+ * 1 colonne (mobile) → 2 (≥640px) → 3 (≥980px) par défaut. Le nombre de colonnes
+ * larges est paramétrable. Ne porte aucune couleur : pure mise en page.
+ *
+ * @prop {(2|3|4)} [columns=3] - Nombre de colonnes sur grand écran.
+ * @slot default - Les <CommandCard> (ou tout enfant en grille).
+ */
+interface Props {
+  columns?: 2 | 3 | 4;
+}
+
+const { columns = 3 } = Astro.props;
+---
+
+<div class="bdf-cmd-grid" style={`--bdf-cmd-cols:${columns}`}>
+  <slot />
+</div>
+
+<style>
+  .bdf-cmd-grid {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) {
+    .bdf-cmd-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 980px) {
+    .bdf-cmd-grid { grid-template-columns: repeat(var(--bdf-cmd-cols, 3), 1fr); }
+  }
+</style>

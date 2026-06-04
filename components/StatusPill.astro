@@ -1,0 +1,62 @@
+---
+/**
+ * StatusPill — pastille d'état (opérationnel / dégradé / hors service).
+ *
+ * Couleur sémantique d'état (verte / ambre / rouge), JAMAIS l'accent du bot :
+ * un état est lu de la même façon quel que soit le bot. Le point pulse en mode
+ * `up` (désactivé sous prefers-reduced-motion). `role="status"` pour l'a11y.
+ *
+ * @prop {('up'|'degraded'|'down')} status - État. Détermine couleur, point, libellé.
+ * @prop {string} [label] - Libellé personnalisé. Défaut selon le statut.
+ * @prop {boolean} [pulse=true] - Anime le point en `up` (ignoré pour les autres).
+ */
+interface Props {
+  status: "up" | "degraded" | "down";
+  label?: string;
+  pulse?: boolean;
+}
+
+const { status, label, pulse = true } = Astro.props;
+
+const DEFAULT_LABEL: Record<Props["status"], string> = {
+  up: "Opérationnel",
+  degraded: "Service dégradé",
+  down: "Hors service",
+};
+const text = label ?? DEFAULT_LABEL[status];
+---
+
+<span class:list={["bdf-pill", `bdf-pill--${status}`]} role="status">
+  <span class:list={["bdf-pill__dot", { "bdf-pill__dot--pulse": pulse && status === "up" }]} aria-hidden="true"></span>
+  {text}
+</span>
+
+<style>
+  .bdf-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    padding: var(--sp-2) var(--sp-4);
+    border-radius: var(--r-pill);
+  }
+  .bdf-pill--up { color: var(--c-positive-text); background: var(--c-positive-100); }
+  .bdf-pill--degraded { color: var(--c-warning-text); background: var(--c-warning-100); }
+  .bdf-pill--down { color: var(--c-danger-text); background: var(--c-danger-100); }
+
+  .bdf-pill__dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .bdf-pill--up .bdf-pill__dot { background: var(--c-positive); }
+  .bdf-pill--degraded .bdf-pill__dot { background: var(--c-warning); }
+  .bdf-pill--down .bdf-pill__dot { background: var(--c-danger); }
+
+  .bdf-pill__dot--pulse { animation: bdf-pill-pulse 2.4s var(--ease-inout) infinite; }
+  @keyframes bdf-pill-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c-positive) 55%, transparent); }
+    70%, 100% { box-shadow: 0 0 0 10px transparent; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bdf-pill__dot--pulse { animation: none; }
+  }
+</style>
