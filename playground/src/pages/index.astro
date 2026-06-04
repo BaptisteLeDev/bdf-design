@@ -1,0 +1,218 @@
+---
+import Base from "@bdf/design/layouts/Base.astro";
+import Nav from "@bdf/design/components/Nav.astro";
+import Footer from "@bdf/design/components/Footer.astro";
+import Hero from "@bdf/design/components/Hero.astro";
+import BotCard from "@bdf/design/components/BotCard.astro";
+import StatCard from "@bdf/design/components/StatCard.astro";
+import CommandCard from "@bdf/design/components/CommandCard.astro";
+import CommandGrid from "@bdf/design/components/CommandGrid.astro";
+import CtaBand from "@bdf/design/components/CtaBand.astro";
+import StatusPill from "@bdf/design/components/StatusPill.astro";
+import BlobShape from "@bdf/design/components/BlobShape.astro";
+
+const bots = [
+  { id: "moodioos", name: "Moodioos", tag: "bien-être", glyph: "🦆", accent: "corail / pêche" },
+  { id: "renamioos", name: "ReNamioos", tag: "identité", glyph: "𝓪", accent: "lavande / lilas" },
+  { id: "coverioos", name: "Coverioos", tag: "jeu", glyph: "🕵️", accent: "doré / ambre" },
+  { id: "collabioos", name: "Collabioos", tag: "collab", glyph: "🌱", accent: "vert sauge" },
+] as const;
+---
+
+<Base
+  title="@bdf/design — Playground"
+  description="Démonstration de chaque composant du design system BotDiscordFactory dans les 4 accents."
+>
+  <Nav
+    brand="bdf-design"
+    glyph="◐"
+    links={[
+      { label: "Accents", href: "#accents" },
+      { label: "Composants", href: "#composants" },
+      { label: "États", href: "#etats" },
+    ]}
+    cta={{ label: "Voir la flotte", href: "#composants" }}
+  />
+
+  <main id="main">
+    <Hero overline="Design system · playground" titleStyle="gradient">
+      <Fragment slot="title">Une grammaire, <em>quatre voix</em>.</Fragment>
+      <Fragment slot="lead">
+        Tous les composants de <strong>@bdf/design</strong> rendus tels quels, déclinés
+        dans les quatre accents de la flotte. Cette page est à la fois la preuve de build
+        et la documentation visuelle.
+      </Fragment>
+      <Fragment slot="actions">
+        <a class="bdf-btn" href="#composants">Explorer les composants <span aria-hidden="true">→</span></a>
+        <a class="bdf-btn bdf-btn--ghost" href="#accents">Voir les accents</a>
+      </Fragment>
+      <Fragment slot="visual">
+        <div class="hero-blobs" aria-hidden="true">
+          <div class="hero-blobs__cell" data-bot="moodioos"><BlobShape size="120px" float><span>🦆</span></BlobShape></div>
+          <div class="hero-blobs__cell" data-bot="renamioos"><BlobShape size="92px" float><span>𝓪</span></BlobShape></div>
+          <div class="hero-blobs__cell" data-bot="coverioos"><BlobShape size="92px" float><span>🕵️</span></BlobShape></div>
+          <div class="hero-blobs__cell" data-bot="collabioos"><BlobShape size="120px" float><span>🌱</span></BlobShape></div>
+        </div>
+      </Fragment>
+    </Hero>
+
+    <!-- ACCENTS : la même carte dans les 4 teintes -->
+    <section class="bdf-section" id="accents">
+      <div class="bdf-wrap">
+        <div class="bdf-section__head">
+          <span class="bdf-overline">Mécanisme [data-bot]</span>
+          <h2 class="bdf-section__title">Un accent par bot, le reste invariant.</h2>
+          <p class="bdf-section__sub">
+            Chaque <code>BotCard</code> pose son propre <code>data-bot</code> : l'accent et la
+            forme signature suivent, sans rien changer d'autre.
+          </p>
+        </div>
+        <div class="grid-4">
+          {bots.map((b) => (
+            <BotCard bot={b.id} name={b.name} tag={b.tag} glyph={b.glyph} href="#" cta={`Explorer ${b.name}`}>
+              Accent <strong>{b.accent}</strong>. Démonstration de la carte bot avec sa teinte
+              et son blob signature hérités du token <code>--bot-blob</code>.
+            </BotCard>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPOSANTS par accent : Stat, Command, Cta, Blob -->
+    <section class="bdf-section" id="composants">
+      <div class="bdf-wrap">
+        <div class="bdf-section__head">
+          <span class="bdf-overline">Catalogue</span>
+          <h2 class="bdf-section__title">Chaque composant, dans chaque accent.</h2>
+        </div>
+
+        {bots.map((b) => (
+          <div class="accent-block" data-bot={b.id}>
+            <header class="accent-block__head">
+              <BlobShape size="48px" fill="solid"><span>{b.glyph}</span></BlobShape>
+              <div>
+                <h3 class="accent-block__title">{b.name}</h3>
+                <span class="bdf-overline">{b.accent}</span>
+              </div>
+              <StatusPill status={b.id === "collabioos" ? "degraded" : "up"} />
+            </header>
+
+            <div class="grid-4">
+              <StatCard overline="Serveurs" value="1 240" label="communautés équipées" />
+              <StatCard overline="Membres" value="86" unit="k" label="accompagnés" />
+              <StatCard overline="Commandes" value="3.2" unit="M" label="rituels lancés" />
+              <StatCard overline="Uptime" value="99.97" unit="%" label="30 jours" />
+            </div>
+
+            <CommandGrid columns={3}>
+              <CommandCard name="/mood" glyph="🌈">Partager son humeur du moment d'un mot.</CommandCard>
+              <CommandCard name="/breathe" glyph="🫧">Respiration guidée 4-7-8 dans le salon.</CommandCard>
+              <CommandCard name="/affirmation" glyph="✨">Une affirmation positive du jour.</CommandCard>
+            </CommandGrid>
+
+            <CtaBand overline="Prêt en 30 secondes" title={`Ajoutez ${b.name} à votre serveur.`}>
+              <Fragment slot="lead">Le bandeau CTA reprend l'accent du bot, texte en <code>--accent-ink</code> (AA).</Fragment>
+              <Fragment slot="actions">
+                <a class="bdf-btn bdf-btn--lg" href="#">Ajouter à Discord <span aria-hidden="true">→</span></a>
+              </Fragment>
+            </CtaBand>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- ÉTATS : StatusPill -->
+    <section class="bdf-section" id="etats">
+      <div class="bdf-wrap">
+        <div class="bdf-section__head">
+          <span class="bdf-overline">StatusPill</span>
+          <h2 class="bdf-section__title">Les états se lisent pareil partout.</h2>
+          <p class="bdf-section__sub">
+            La couleur d'état est sémantique (verte / ambre / rouge), jamais l'accent du bot.
+          </p>
+        </div>
+        <div class="pills">
+          <StatusPill status="up" label="Tous les systèmes opérationnels" />
+          <StatusPill status="degraded" />
+          <StatusPill status="down" />
+        </div>
+
+        <div class="blob-row">
+          <BlobShape shape="blob" fill="solid"><span>◐</span></BlobShape>
+          <BlobShape shape="round" fill="tint"><span>◑</span></BlobShape>
+          <BlobShape shape="soft" fill="plain"><span>◒</span></BlobShape>
+          <BlobShape shape="pill" fill="solid" size="80px"><span>◓</span></BlobShape>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer
+    brand="bdf-design"
+    glyph="◐"
+    tagline="Le design system de la flotte BotDiscordFactory. Tokens en trois couches, un accent par bot."
+    columns={[
+      { title: "Sections", links: [
+        { label: "Accents", href: "#accents" },
+        { label: "Composants", href: "#composants" },
+        { label: "États", href: "#etats" },
+      ]},
+      { title: "Flotte", links: bots.map((b) => ({ label: b.name, href: "#composants" })) },
+    ]}
+    legal="© 2026 BotDiscordFactory — direction « Soft Premium »."
+    version="bdf-design · playground"
+  />
+</Base>
+
+<style>
+  .hero-blobs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    gap: var(--sp-5);
+    height: 100%;
+  }
+  .hero-blobs__cell { display: grid; place-items: center; }
+  .hero-blobs__cell :global(.bdf-blob) { font-size: 2.4rem; }
+
+  .grid-4 {
+    display: grid;
+    gap: var(--sp-4);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 640px) { .grid-4 { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 1040px) { .grid-4 { grid-template-columns: repeat(4, 1fr); } }
+
+  .accent-block {
+    padding: var(--sp-6);
+    border-radius: var(--r-xl);
+    border: 1px solid var(--c-line);
+    background: color-mix(in srgb, var(--accent-100) 22%, var(--c-paper-0));
+    margin-bottom: var(--sp-7);
+    display: grid;
+    gap: var(--sp-5);
+  }
+  .accent-block__head {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+  }
+  .accent-block__head > div { margin-right: auto; }
+  .accent-block__title { font-size: var(--fs-xl); color: var(--c-ink-900); }
+
+  .accent-block :global(.bdf-blob span) { font-size: 1.4rem; }
+
+  .pills { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-bottom: var(--sp-6); }
+  .blob-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-5); }
+  .blob-row :global(.bdf-blob span) { font-size: 1.6rem; }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--accent-600);
+    background: color-mix(in srgb, var(--accent-100) 55%, var(--c-paper-0));
+    padding: 1px 6px;
+    border-radius: var(--r-xs);
+  }
+</style>
