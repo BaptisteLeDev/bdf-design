@@ -1,14 +1,14 @@
 ---
 /**
- * CtaBand — bandeau d'appel à l'action, fond accent dégradé + blobs flottants.
+ * CtaBand — bandeau d'appel à l'action, surface accent claire et nette.
  *
- * Le texte est posé en `--accent-ink` (foncé, AA garanti sur le dégradé clair de
- * l'accent du bot actif). Les blobs décoratifs flottent (désactivé sous
- * prefers-reduced-motion).
+ * Direction minimale : aplat accent clair, plus de blobs flottants. Le texte est
+ * posé en `--accent-ink` (foncé, AA garanti sur la surface claire de l'accent du
+ * bot actif). `decor` rend désormais un fin liseré géométrique statique (ou rien).
  *
  * @prop {string} [overline] - Sur-titre mono (rendu en --accent-ink).
  * @prop {string} title - Titre du bandeau (h2). Requis.
- * @prop {boolean} [decor=true] - Affiche les blobs décoratifs flottants.
+ * @prop {boolean} [decor=true] - Affiche les marqueurs géométriques discrets.
  * @slot lead - Paragraphe sous le titre.
  * @slot actions - Boutons d'action (utiliser .bdf-btn pour le style accent-ink).
  */
@@ -42,13 +42,12 @@ const { overline, title, decor = true } = Astro.props;
   .bdf-cta {
     position: relative;
     overflow: hidden;
-    border-radius: var(--r-xl);
-    /* Plancher du dégradé = --accent-300 (et non -500) : le texte foncé
-       --accent-ink garde un contraste AA (≥4.5:1) sur tout le bandeau. */
-    background:
-      radial-gradient(80% 120% at 15% 0%, color-mix(in srgb, #fff 50%, var(--accent-200)), transparent 55%),
-      linear-gradient(135deg, var(--accent-200), var(--accent-300));
-    box-shadow: var(--shadow-xl);
+    border-radius: var(--r-lg);
+    /* Aplat clair de l'accent : le texte foncé --accent-ink garde un contraste
+       AA (≥4.5:1) sur tout le bandeau. */
+    background: color-mix(in srgb, var(--accent-100) 80%, var(--c-paper-0));
+    border: 1px solid var(--accent-200);
+    box-shadow: none;
     padding: clamp(2rem, 6vw, var(--sp-9));
     text-align: center;
   }
@@ -73,24 +72,16 @@ const { overline, title, decor = true } = Astro.props;
     gap: var(--sp-3);
     justify-content: center;
   }
-  /* Bouton sur fond accent : inverse en --accent-ink (contraste fort). */
+  /* Bouton sur fond accent : aplat --accent-ink (contraste fort). */
   .bdf-cta__actions :global(.bdf-btn) { background: var(--accent-ink); }
-  .bdf-cta__actions :global(.bdf-btn:hover) { box-shadow: var(--shadow-lg); }
 
+  /* Marqueurs géométriques discrets, statiques (plus de blobs flottants). */
   .bdf-cta__decor {
     position: absolute;
-    border-radius: var(--bot-blob);
-    background: rgba(255, 255, 255, 0.22);
-    animation: bdf-cta-float var(--dur-float) var(--ease-inout) infinite;
-    will-change: transform;
+    border-radius: var(--r-sm);
+    border: 1px solid var(--accent-200);
+    background: transparent;
   }
-  .bdf-cta__decor--1 { width: 120px; height: 120px; top: -30px; right: 8%; }
-  .bdf-cta__decor--2 { width: 80px; height: 80px; bottom: -24px; left: 12%; animation-delay: -3s; }
-  @keyframes bdf-cta-float {
-    0%, 100% { transform: translate3d(0, 0, 0); }
-    50% { transform: translate3d(0, -12px, 0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .bdf-cta__decor { animation: none; }
-  }
+  .bdf-cta__decor--1 { width: 96px; height: 96px; top: -32px; right: 6%; transform: rotate(12deg); }
+  .bdf-cta__decor--2 { width: 64px; height: 64px; bottom: -22px; left: 9%; transform: rotate(-8deg); }
 </style>

@@ -47,11 +47,11 @@ const bots = [
         <a class="bdf-btn bdf-btn--ghost" href="#accents">Voir les accents</a>
       </Fragment>
       <Fragment slot="visual">
-        <div class="hero-blobs" aria-hidden="true">
-          <div class="hero-blobs__cell" data-bot="moodioos"><BlobShape size="120px" float><span>🦆</span></BlobShape></div>
-          <div class="hero-blobs__cell" data-bot="renamioos"><BlobShape size="92px" float><span>𝓪</span></BlobShape></div>
-          <div class="hero-blobs__cell" data-bot="coverioos"><BlobShape size="92px" float><span>🕵️</span></BlobShape></div>
-          <div class="hero-blobs__cell" data-bot="collabioos"><BlobShape size="120px" float><span>🌱</span></BlobShape></div>
+        <div class="hero-marks" aria-hidden="true">
+          <div class="hero-marks__cell" data-bot="moodioos"><BlobShape shape="soft" size="96px"><span>🦆</span></BlobShape></div>
+          <div class="hero-marks__cell" data-bot="renamioos"><BlobShape shape="soft" size="96px"><span>𝓪</span></BlobShape></div>
+          <div class="hero-marks__cell" data-bot="coverioos"><BlobShape shape="soft" size="96px"><span>🕵️</span></BlobShape></div>
+          <div class="hero-marks__cell" data-bot="collabioos"><BlobShape shape="soft" size="96px"><span>🌱</span></BlobShape></div>
         </div>
       </Fragment>
     </Hero>
@@ -159,21 +159,20 @@ const bots = [
       ]},
       { title: "Flotte", links: bots.map((b) => ({ label: b.name, href: "#composants" })) },
     ]}
-    legal="© 2026 BotDiscordFactory — direction « Soft Premium »."
+    legal="© 2026 BotDiscordFactory · direction « Neo-grotesque minimal »."
     version="bdf-design · playground"
   />
 </Base>
 
 <style>
-  .hero-blobs {
+  .hero-marks {
     display: grid;
     grid-template-columns: 1fr 1fr;
     place-items: center;
-    gap: var(--sp-5);
-    height: 100%;
+    gap: var(--sp-4);
   }
-  .hero-blobs__cell { display: grid; place-items: center; }
-  .hero-blobs__cell :global(.bdf-blob) { font-size: 2.4rem; }
+  .hero-marks__cell { display: grid; place-items: center; }
+  .hero-marks__cell :global(.bdf-blob) { font-size: 2.2rem; }
 
   .grid-4 {
     display: grid;

@@ -36,30 +36,26 @@ const { name, glyph } = Astro.props;
     background: var(--c-paper-0);
     border: 1px solid var(--c-line);
     border-radius: var(--r-md);
-    box-shadow: var(--shadow-xs);
+    box-shadow: none;
     transition: transform var(--dur-base) var(--ease-soft),
-      box-shadow var(--dur-base) var(--ease-soft),
       border-color var(--dur-base);
   }
   .bdf-cmd:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: var(--accent-200);
+    transform: translateY(-2px);
+    border-color: var(--c-ink-900);
   }
   .bdf-cmd__head { display: flex; align-items: center; gap: var(--sp-3); }
   .bdf-cmd__glyph {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     flex: none;
-    border-radius: var(--bot-blob);
+    border-radius: var(--r-sm);
     background: color-mix(in srgb, var(--accent-100) 70%, var(--c-paper-0));
     border: 1px solid var(--accent-200);
     display: grid;
     place-items: center;
-    font-size: 1.25rem;
-    transition: border-radius var(--dur-slow) var(--ease-spring);
+    font-size: 1.2rem;
   }
-  .bdf-cmd:hover .bdf-cmd__glyph { border-radius: var(--r-md); }
   .bdf-cmd__name {
     font-family: var(--font-mono);
     font-size: var(--fs-md);

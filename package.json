@@ -1,6 +1,6 @@
 {
   "name": "@bdf/design",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Design system de la flotte BotDiscordFactory (-ioos). Tokens CSS + composants Astro soft premium, un accent par bot via [data-bot].",
   "type": "module",
   "license": "UNLICENSED",

@@ -119,22 +119,22 @@ const ctaIsExternal = ctaExternal ?? isExternal(cta?.href);
   }
   .bdf-brand__suffix { color: var(--c-ink-400); }
   .bdf-brand__mark {
-    width: 34px;
-    height: 34px;
-    border-radius: var(--bot-blob);
-    background: linear-gradient(145deg, var(--accent-300), var(--accent-500));
-    box-shadow: var(--shadow-sm), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+    width: 32px;
+    height: 32px;
+    border-radius: var(--r-sm);
+    background: var(--accent-500);
+    color: #fff;
     display: grid;
     place-items: center;
     font-size: 1.05rem;
   }
   .bdf-brand__mark--fleet {
     background: linear-gradient(
-      145deg,
-      var(--bot-moodioos-300),
-      var(--bot-renamioos-300) 45%,
-      var(--bot-coverioos-300) 75%,
-      var(--bot-collabioos-300)
+      90deg,
+      var(--bot-moodioos-500),
+      var(--bot-renamioos-500) 45%,
+      var(--bot-coverioos-500) 75%,
+      var(--bot-collabioos-500)
     );
   }
   /* Zone d'actions à droite : slot (ex. sélecteur de langue) + CTA, dans le flux.

@@ -1,13 +1,14 @@
 # @bdf/design
 
 Design system de la flotte **BotDiscordFactory** (la famille `-ioos`). Un seul langage
-visuel — typographie, espacement, ombres, formes organiques — décliné par **un accent
-de couleur et une forme signature par bot** via l'attribut `[data-bot]`.
+visuel (typographie, espacement, hairlines, formes nettes) décliné par **un accent
+de couleur par bot** via l'attribut `[data-bot]`.
 
-Direction artistique : **« Soft premium fidèle à l'existant »**. Évolution premium du
-site Moodioos d'origine (pastels chauds rose / pêche / corail / doré / lavande), avec la
-structure et la qualité de l'exploration soft-premium (neutres tièdes, ombres diffuses
-multicouches, blobs organiques, `Sora` + `Plus Jakarta Sans` + `JetBrains Mono`).
+Direction artistique : **« Neo-grotesque minimal »**. Base neutre quasi-monochrome
+(encre presque noire sur papier blanc cassé), typographie neo-grotesque à fort contraste
+de graisse (`Space Grotesk` display + `Geist` corps/UI, mono système), ornement réduit
+(plus de blobs organiques : rayons serrés, formes géométriques nettes), ombres discrètes,
+accent unique par bot conservé mais employé avec parcimonie.
 
 ## Quoi / pourquoi
 

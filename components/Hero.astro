@@ -1,11 +1,13 @@
 ---
 /**
- * Hero — section d'en-tête à deux colonnes (texte + visuel blob).
+ * Hero — composition typographique neo-grotesque (titre display, beaucoup de blanc).
  *
- * Structure : overline · titre · chapeau · actions à gauche ; visuel à droite.
+ * Structure : overline · titre · chapeau · actions. Direction minimale : pas
+ * d'amas de blobs. Sans slot `visual`, le Hero est une colonne typographique
+ * centrée/alignée à gauche, dominée par un grand titre à tracking serré. Le slot
+ * `visual` reste supporté (le portail peut l'utiliser), rendu en colonne discrète.
  * Le titre et le chapeau passent par des slots pour autoriser la mise en valeur
- * (ex. `<em>` dégradé). Le visuel par défaut est un slot `visual` (souvent un
- * amas de <BlobShape> ou une <BlobShape float>).
+ * (ex. `<em>` accentué).
  *
  * @prop {string} [overline] - Sur-titre mono en majuscules (accent du bot actif).
  * @prop {('default'|'gradient')} [titleStyle='default'] - 'gradient' applique le
@@ -14,7 +16,7 @@
  * @slot title - Titre principal (h1). Requis.
  * @slot lead - Chapeau (paragraphe d'intro).
  * @slot actions - Boutons / liens d'action.
- * @slot visual - Visuel de droite (blobs). aria-hidden conseillé côté appelant.
+ * @slot visual - Visuel de droite optionnel. aria-hidden conseillé côté appelant.
  */
 interface Props {
   overline?: string;
@@ -48,9 +50,11 @@ const hasVisual = Astro.slots.has("visual");
 <style>
   .bdf-hero {
     position: relative;
-    padding-top: var(--sp-9);
-    padding-bottom: var(--sp-8);
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-9);
   }
+  /* Solo (sans visual) = colonne typographique large, beaucoup de blanc. */
+  .bdf-hero--solo { padding-top: clamp(var(--sp-9), 14vh, var(--sp-10)); }
   .bdf-hero__grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -59,33 +63,42 @@ const hasVisual = Astro.slots.has("visual");
   }
   @media (min-width: 940px) {
     .bdf-hero__grid:not(.bdf-hero__grid--solo) {
-      grid-template-columns: 1.05fr 0.95fr;
+      grid-template-columns: 1.1fr 0.9fr;
       gap: var(--sp-8);
     }
   }
-  .bdf-hero__copy--center { text-align: center; margin-inline: auto; max-width: 64ch; }
+  .bdf-hero__copy--center { text-align: center; margin-inline: auto; max-width: 22ch; }
   .bdf-hero__copy--center .bdf-hero__lead { margin-inline: auto; }
   .bdf-hero__copy--center .bdf-hero__actions { justify-content: center; }
 
+  /* Stagger d'entrée sobre, CSS pur (opacity + translate léger). */
+  .bdf-hero__copy > * {
+    animation: bdf-hero-in var(--dur-slow) var(--ease-soft) both;
+  }
+  .bdf-overline { animation-delay: 0ms; }
+  .bdf-hero__title { animation-delay: 60ms; }
+  .bdf-hero__lead { animation-delay: 120ms; }
+  .bdf-hero__actions { animation-delay: 180ms; }
+  @keyframes bdf-hero-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bdf-hero__copy > * { animation: none; }
+  }
+
   .bdf-hero__title {
-    font-size: clamp(2.6rem, 7vw, var(--fs-5xl));
+    font-size: clamp(2.8rem, 8vw, var(--fs-5xl));
     letter-spacing: var(--ls-display);
     line-height: var(--lh-tight);
     font-weight: var(--fw-bold);
-    margin-top: var(--sp-4);
+    margin-top: var(--sp-5);
+    text-wrap: balance;
   }
-  /* Le slot title peut contenir <em> mis en valeur via le dégradé flotte. */
+  /* Le slot title peut contenir <em> mis en valeur via l'accent du bot actif. */
   .bdf-hero__title--gradient :global(em) {
     font-style: normal;
-    background: linear-gradient(
-      100deg,
-      var(--bot-moodioos-600),
-      var(--bot-renamioos-600) 50%,
-      var(--bot-coverioos-600)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent-600);
   }
   .bdf-hero__lead {
     font-size: var(--fs-lg);
@@ -93,19 +106,19 @@ const hasVisual = Astro.slots.has("visual");
     color: var(--c-ink-500);
     max-width: 46ch;
     margin-top: var(--sp-5);
+    text-wrap: pretty;
   }
   .bdf-hero__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: var(--sp-3);
-    margin-top: var(--sp-6);
+    margin-top: var(--sp-7);
   }
   .bdf-hero__art {
     position: relative;
     width: 100%;
-    aspect-ratio: 1 / 1;
-    max-width: 460px;
+    max-width: 420px;
     margin-inline: auto;
   }
 </style>

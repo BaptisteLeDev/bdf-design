@@ -1,22 +1,23 @@
 ---
 /**
- * BlobShape — forme organique signature de la flotte.
+ * BlobShape — écrin géométrique discret pour un glyphe (ex-forme organique).
  *
- * Conteneur arrondi par coins inégaux. Par défaut il prend la forme `--bot-blob`
- * du bot actif (héritée du contexte [data-bot] ancêtre) ; sinon le `--r-blob`
- * générique. Sert d'écrin à un emoji/glyphe (slot) — mascotte, icône de bot, etc.
+ * Direction « neo-grotesque minimal » : plus de blobs organiques. Conteneur à
+ * rayon net (`--bot-blob` désormais aliasé sur un rayon serré commun). Sert
+ * d'écrin sobre à un emoji/glyphe (slot) — mascotte, icône de bot, etc.
+ * Composant et props CONSERVÉS (le portail l'importe) ; le rendu est juste sobre.
  *
  * @prop {('blob'|'pill'|'round'|'soft')} [shape='blob'] - Forme du conteneur.
- *   - blob  : `--bot-blob` du bot actif (forme organique signature).
+ *   - blob  : rayon `--bot-blob` (net, plus organique).
  *   - round : cercle parfait.
  *   - pill  : rayon `--r-pill`.
  *   - soft  : rayon `--r-md` (coins doux réguliers).
  * @prop {string} [size='60px'] - Taille (largeur = hauteur), valeur CSS.
  * @prop {('tint'|'solid'|'plain')} [fill='solid'] - Remplissage.
- *   - solid : dégradé accent-300 → accent-500 (mascotte vive).
+ *   - solid : aplat accent-500 (glyphe en évidence, sobre).
  *   - tint  : wash accent-100 + liseré accent-200 (icône discrète).
  *   - plain : surface --c-paper-0 + liseré --c-line (neutre).
- * @prop {boolean} [float=false] - Active la respiration flottante (translateY).
+ * @prop {boolean} [float=false] - Active une respiration flottante très discrète.
  *   Désactivée sous prefers-reduced-motion.
  * @prop {string} [class] - Classes additionnelles.
  * @slot default - Contenu centré (emoji, glyphe, SVG…). aria-hidden par défaut.
@@ -55,9 +56,9 @@ const {
     flex: none;
     font-size: calc(var(--blob-size) * 0.42);
     line-height: 1;
-    box-shadow: var(--shadow-md), inset 0 2px 4px rgba(255, 255, 255, 0.4);
-    transition: border-radius var(--dur-slow) var(--ease-spring),
-      transform var(--dur-base) var(--ease-spring);
+    box-shadow: var(--shadow-xs);
+    transition: border-radius var(--dur-base) var(--ease-soft),
+      transform var(--dur-base) var(--ease-soft);
   }
 
   .bdf-blob--blob { border-radius: var(--bot-blob); }
@@ -66,17 +67,18 @@ const {
   .bdf-blob--soft { border-radius: var(--r-md); }
 
   .bdf-blob--solid {
-    background: linear-gradient(145deg, var(--accent-300), var(--accent-500));
+    background: var(--accent-500);
+    color: #fff;
   }
   .bdf-blob--tint {
     background: color-mix(in srgb, var(--accent-100) 70%, var(--c-paper-0));
     border: 1px solid var(--accent-200);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
   }
   .bdf-blob--plain {
     background: var(--c-paper-0);
     border: 1px solid var(--c-line);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
   }
 
   .bdf-blob--float {
@@ -84,8 +86,8 @@ const {
     will-change: transform;
   }
   @keyframes bdf-blob-float {
-    0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
-    50% { transform: translate3d(0, -10px, 0) rotate(-2deg); }
+    0%, 100% { transform: translate3d(0, 0, 0); }
+    50% { transform: translate3d(0, -5px, 0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .bdf-blob { animation: none; }

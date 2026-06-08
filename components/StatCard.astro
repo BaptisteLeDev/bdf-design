@@ -39,23 +39,14 @@ const { value, unit, label, overline, valueId, overlineKey } = Astro.props;
     overflow: hidden;
     isolation: isolate;
     padding: var(--sp-6);
-    border-radius: var(--r-lg);
+    border-radius: var(--r-md);
     background: var(--c-paper-0);
     border: 1px solid var(--c-line);
-    box-shadow: var(--shadow-sm);
+    box-shadow: none;
     transition: transform var(--dur-base) var(--ease-soft),
-      box-shadow var(--dur-base) var(--ease-soft);
+      border-color var(--dur-base);
   }
-  .bdf-stat::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: -50% -30% auto auto;
-    width: 70%;
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 30% 30%, var(--accent-100), transparent 70%);
-  }
-  .bdf-stat:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .bdf-stat:hover { transform: translateY(-2px); border-color: var(--c-ink-900); }
   .bdf-stat__overline {
     font-family: var(--font-mono);
     font-size: var(--fs-2xs);
@@ -72,6 +63,7 @@ const { value, unit, label, overline, valueId, overlineKey } = Astro.props;
     letter-spacing: var(--ls-display);
     line-height: 1;
     margin-top: var(--sp-3);
+    font-variant-numeric: tabular-nums;
   }
   .bdf-stat__num small { font-size: var(--fs-xl); color: var(--accent-600); }
   .bdf-stat__label { margin-top: var(--sp-3); font-size: var(--fs-sm); color: var(--c-ink-500); }

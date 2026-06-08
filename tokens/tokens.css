@@ -1,22 +1,23 @@
 /* =============================================================================
    @bdf/design — TOKENS
-   Direction artistique : « Soft premium FIDÈLE À L'EXISTANT ».
-   Évolution premium du site Moodioos d'origine (pastels chauds rose / pêche /
-   corail / doré / lavande), avec la structure et la qualité de l'exploration
-   soft-premium : neutres tièdes, ombres diffuses multicouches, blobs
-   organiques signatures, Sora + Plus Jakarta Sans + JetBrains Mono, échelle 4/8.
+   Direction artistique : « Neo-grotesque minimal ».
+   Base neutre quasi-monochrome (encre presque noire sur papier blanc cassé),
+   typographie neo-grotesque à fort contraste de graisse, ornement réduit
+   (plus de blobs organiques signatures — formes nettes, rayons serrés), ombres
+   discrètes, accent unique par bot conservé mais employé avec parcimonie.
+   Deux familles web : Space Grotesk (display) + Geist (corps/UI). Le mono
+   retombe sur une stack système (aucune 3e police chargée).
 
    TROIS COUCHES (cf. ARCHITECTURE.md) :
      1. PRIMITIVES   — la matière brute (neutres, rampes par bot, fontes, échelle…).
      2. RÔLES        — les sémantiques invariantes que les composants consomment
                        (--accent-*, --c-ink-*, --shadow-*…). On ne lit JAMAIS une
                        primitive de bot directement dans un composant.
-     3. VARIANTES    — [data-bot="…"] rebinde --accent-* + --bot-blob. Le reste du
-                       système est invariant.
+     3. VARIANTES    — [data-bot="…"] rebinde --accent-*. Le reste est invariant.
 
    Invariant dur : AUCUNE couleur en dur hors de ce fichier. Contraste AA garanti
-   par les paliers -600 (texte sur paper-0/-50/-100, ≥4.5:1 vérifié pour les 4 bots)
-   et -ink (texte sur surface accent -100).
+   par les paliers -600 (texte sur paper-0/-50/-100) et -ink (texte sur surface
+   accent -100). Les noms de variables de rôle sont STABLES (contrat composants).
    ============================================================================= */
 
 :root {
@@ -24,79 +25,81 @@
      COUCHE 1 — PRIMITIVES
      =========================================================================== */
 
-  /* --- Neutres tièdes (pas de blanc clinique) ----------------------------- */
-  --c-ink-900: #1f1a1d;   /* texte principal — presque noir, nuance chaude */
-  --c-ink-700: #3d343a;   /* titres secondaires */
-  --c-ink-500: #5f5359;   /* corps de texte (AA sur paper) */
-  --c-ink-400: #6e6168;   /* texte tertiaire, légendes (AA sur paper) */
-  --c-ink-300: #aaa0a5;   /* placeholder, désactivé */
+  /* --- Neutres (gris neutre froid léger, pas de teinte chaude) ------------- */
+  --c-ink-900: #0e0e11;   /* texte principal — off-black */
+  --c-ink-700: #28282d;   /* titres secondaires */
+  --c-ink-500: #54545b;   /* corps de texte (AA sur paper) */
+  --c-ink-400: #6c6c74;   /* texte tertiaire, légendes (AA sur paper) */
+  --c-ink-300: #a0a0a8;   /* placeholder, désactivé */
 
-  --c-paper-0:  #fffdfb;  /* surface la plus haute (cartes en avant-plan) */
-  --c-paper-50: #fdf8f5;  /* fond de page — crème rosé hérité de --pastel-cream */
-  --c-paper-100:#f8efe9;  /* surfaces légèrement enfoncées */
-  --c-paper-200:#efe2da;  /* bordures douces, séparateurs */
-  --c-line:     #ecddd5;  /* hairlines tièdes */
+  --c-paper-0:  #ffffff;  /* surface la plus haute (cartes en avant-plan) */
+  --c-paper-50: #f6f6f7;  /* fond de page — blanc cassé neutre */
+  --c-paper-100:#eeeef0;  /* surfaces légèrement enfoncées */
+  --c-paper-200:#e2e2e6;  /* bordures douces, séparateurs */
+  --c-line:     #e7e7ea;  /* hairlines */
 
-  /* Halos de lumière de fond — pastels d'origine, désaturés en air, pas accents */
-  --c-glow-pink: #ffeef0; /* rose laiteux (← --pastel-pink #FFE8E8) */
-  --c-glow-peach:#ffece2; /* pêche laiteux (← --pastel-peach) */
-  --c-glow-gold: #fdf3da; /* doré laiteux */
-  --c-glow-lilac:#f6edf8; /* lavande laiteux (← --pastel-lavender #F3E5F5) */
+  /* Halos de lumière de fond — très subtils, neutres tirant vers l'accent.
+     Conservés (noms stables) mais quasi imperceptibles dans la direction minimale. */
+  --c-glow-pink: #f7eeef;
+  --c-glow-peach:#f6efec;
+  --c-glow-gold: #f5f1e7;
+  --c-glow-lilac:#f1edf5;
 
   /* --- Rampes par bot (PRIMITIVES) ---------------------------------------
-     Chaque bot : 100 (wash de fond) → 600 (texte/hover AA sur clair) + -ink
-     (texte foncé sur surface accent, ex. CTA band). Désaturation légère du
-     pastel d'origine pour le premium, sans devenir froid. */
+     Accent par bot conservé (variantes), employé par petites touches sur la
+     base neutre. Paliers -600 garantis AA sur paper clair, -ink sur surface -100. */
 
-  /* Moodioos — bien-être / humeur — corail-pêche (← corail #FF8C94 raffiné) */
-  --bot-moodioos-100: #ffeae7;
-  --bot-moodioos-200: #ffd2cb;
-  --bot-moodioos-300: #fdb0a4;
-  --bot-moodioos-500: #ef7d72;
-  --bot-moodioos-600: #b8443a;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.27 / 5.07 / 4.72 */
+  /* Moodioos — bien-être / humeur — corail */
+  --bot-moodioos-100: #ffe9e6;
+  --bot-moodioos-200: #ffcfc8;
+  --bot-moodioos-300: #fba99c;
+  --bot-moodioos-500: #f2604f;
+  --bot-moodioos-600: #b8443a;  /* AA ≥4.5:1 sur paper-0/-50/-100 */
   --bot-moodioos-ink: #6e261f;
 
-  /* ReNamioos — stylisation Unicode — lavande / lilas (← lavande #F3E5F5 saturé) */
-  --bot-renamioos-100: #f1e7f7;
-  --bot-renamioos-200: #e0cdee;
-  --bot-renamioos-300: #c6a9df;
-  --bot-renamioos-500: #9b6fc9;
-  --bot-renamioos-600: #794aa6;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 6.19 / 5.96 / 5.54 */
+  /* ReNamioos — stylisation Unicode — violet */
+  --bot-renamioos-100: #efe6f7;
+  --bot-renamioos-200: #ddc9ee;
+  --bot-renamioos-300: #c2a2df;
+  --bot-renamioos-500: #8c54c9;
+  --bot-renamioos-600: #794aa6;  /* AA ≥4.5:1 */
   --bot-renamioos-ink: #45286a;
 
-  /* Coverioos — Undercover (jeu) — doré / ambre (← doré #FFD97D raffiné) */
-  --bot-coverioos-100: #fcf0d4;
-  --bot-coverioos-200: #f8dfa6;
-  --bot-coverioos-300: #efc466;
+  /* Coverioos — Undercover (jeu) — ambre */
+  --bot-coverioos-100: #fbeecc;
+  --bot-coverioos-200: #f6db9b;
+  --bot-coverioos-300: #eec153;
   --bot-coverioos-500: #cf9a23;
-  --bot-coverioos-600: #8c640f;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.25 / 5.05 / 4.69 */
+  --bot-coverioos-600: #8c640f;  /* AA ≥4.5:1 */
   --bot-coverioos-ink: #553c08;
 
-  /* Collabioos — collab streamers — vert sauge (nouveau, harmonisé chaud) */
-  --bot-collabioos-100: #e8f1e6;
-  --bot-collabioos-200: #cfe2c9;
-  --bot-collabioos-300: #a7c79c;
-  --bot-collabioos-500: #6f9c5f;
-  --bot-collabioos-600: #4d7740;  /* AA (≥4.5:1) sur paper-0/-50/-100 : 5.14 / 4.95 / 4.60 */
+  /* Collabioos — collab streamers — vert */
+  --bot-collabioos-100: #e4f0e1;
+  --bot-collabioos-200: #c9e1c2;
+  --bot-collabioos-300: #9cc78f;
+  --bot-collabioos-500: #5b9c47;
+  --bot-collabioos-600: #4d7740;  /* AA ≥4.5:1 */
   --bot-collabioos-ink: #2e4a25;
 
-  /* --- États sémantiques (désaturés, dans la palette douce) --------------- */
-  --c-positive: #5f9e7a;        /* pastille / dot décoratif */
+  /* --- États sémantiques (désaturés, neutres) ----------------------------- */
+  --c-positive: #4f9b73;
   --c-positive-text: #2f6f4d;   /* texte sur --c-positive-100 (AA) */
   --c-positive-100: #e6f1ea;
-  --c-warning: #cf9a23;         /* aligné sur l'ambre coverioos */
-  --c-warning-text: #7d5a0e;    /* texte sur --c-warning-100 (AA, 5.5:1) */
-  --c-warning-100: #fcf0d4;
+  --c-warning: #cf9a23;
+  --c-warning-text: #7d5a0e;    /* texte sur --c-warning-100 (AA) */
+  --c-warning-100: #fbeecc;
   --c-danger: #d35b53;
   --c-danger-text: #a83b34;     /* texte sur --c-danger-100 (AA) */
   --c-danger-100: #fbe7e4;
 
-  /* --- Typographie -------------------------------------------------------- */
-  --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+  /* --- Typographie : 2 familles web, neo-grotesque ------------------------ */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
+  /* Mono = stack système (aucune 3e police chargée) ; chiffres tabulaires
+     obtenus via font-variant-numeric côté composants data. */
+  --font-mono: ui-monospace, "SF Mono", "Geist Mono", "JetBrains Mono", monospace;
 
-  --fs-2xs: 0.694rem;  /* 11px — overline mono, labels minuscules */
+  --fs-2xs: 0.694rem;  /* 11px — overline, labels minuscules */
   --fs-xs:  0.833rem;  /* 13px — légendes */
   --fs-sm:  0.9375rem; /* 15px — UI secondaire */
   --fs-md:  1rem;      /* 16px — corps */
@@ -105,17 +108,18 @@
   --fs-2xl: 1.953rem;  /* ~31px — sous-titres section */
   --fs-3xl: 2.625rem;  /* 42px — titres section */
   --fs-4xl: 3.5rem;    /* 56px — hero secondaire */
-  --fs-5xl: 4.75rem;   /* 76px — hero display */
+  --fs-5xl: 5rem;      /* 80px — hero display */
 
-  --lh-tight: 1.04;
-  --lh-snug: 1.18;
+  --lh-tight: 1.0;
+  --lh-snug: 1.14;
   --lh-normal: 1.55;
   --lh-relaxed: 1.7;
 
-  --ls-display: -0.025em;
-  --ls-tight: -0.012em;
+  /* Neo-grotesque : tracking display très serré, labels en capitales espacées. */
+  --ls-display: -0.035em;
+  --ls-tight: -0.018em;
   --ls-normal: 0em;
-  --ls-wide: 0.16em;   /* overlines mono en MAJUSCULES */
+  --ls-wide: 0.14em;
 
   --fw-regular: 400;
   --fw-medium: 500;
@@ -138,44 +142,42 @@
   --container-pad: clamp(1.25rem, 5vw, 4rem);
   --section-y: clamp(4rem, 9vw, 8rem);
 
-  /* --- Rayons (langage « soft ») ------------------------------------------ */
-  --r-xs: 8px;
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 26px;
-  --r-xl: 36px;
+  /* --- Rayons (langage neo-grotesque : serrés, nets) ---------------------- */
+  --r-xs: 4px;
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+  --r-xl: 20px;
   --r-pill: 999px;
-  /* Rayon « blob » générique — coins inégaux pour conteneurs de mascotte/icône */
-  --r-blob: 42% 58% 56% 44% / 48% 42% 58% 52%;
+  /* Conservé pour compat BlobShape ; la direction minimale n'emploie plus de
+     conteneurs blob, mais le composant reste fonctionnel s'il est utilisé. */
+  --r-blob: 28px;
 
-  /* --- Ombres : profondeur par DIFFUSION multicouche (pas de blur glass) --- */
-  --shadow-color: 31 26 29;  /* rgb de --c-ink-900, utilisé en alpha */
+  /* --- Ombres : discrètes, neutres (minimalisme) -------------------------- */
+  --shadow-color: 14 14 17;  /* rgb de --c-ink-900 */
   --shadow-xs:
-    0 1px 2px rgba(var(--shadow-color), 0.04);
+    0 1px 2px rgba(var(--shadow-color), 0.05);
   --shadow-sm:
-    0 1px 2px rgba(var(--shadow-color), 0.04),
-    0 2px 6px rgba(var(--shadow-color), 0.05);
+    0 1px 2px rgba(var(--shadow-color), 0.05),
+    0 1px 3px rgba(var(--shadow-color), 0.06);
   --shadow-md:
-    0 1px 2px rgba(var(--shadow-color), 0.04),
-    0 4px 10px rgba(var(--shadow-color), 0.05),
-    0 10px 24px rgba(var(--shadow-color), 0.06);
+    0 1px 2px rgba(var(--shadow-color), 0.05),
+    0 4px 12px rgba(var(--shadow-color), 0.07);
   --shadow-lg:
-    0 2px 4px rgba(var(--shadow-color), 0.04),
-    0 8px 18px rgba(var(--shadow-color), 0.06),
-    0 22px 48px rgba(var(--shadow-color), 0.08);
+    0 1px 3px rgba(var(--shadow-color), 0.06),
+    0 10px 28px rgba(var(--shadow-color), 0.09);
   --shadow-xl:
-    0 4px 8px rgba(var(--shadow-color), 0.05),
-    0 14px 30px rgba(var(--shadow-color), 0.08),
-    0 36px 72px rgba(var(--shadow-color), 0.10);
+    0 2px 6px rgba(var(--shadow-color), 0.07),
+    0 20px 48px rgba(var(--shadow-color), 0.12);
 
   /* --- Motion : GPU-friendly (transform/opacity uniquement) --------------- */
-  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);   /* sortie douce */
-  --ease-spring: cubic-bezier(0.34, 1.4, 0.5, 1);   /* léger overshoot */
+  --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.3, 0.5, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast: 140ms;
-  --dur-base: 240ms;
-  --dur-slow: 420ms;
-  --dur-float: 7s;       /* respiration de fond */
+  --dur-fast: 130ms;
+  --dur-base: 220ms;
+  --dur-slow: 400ms;
+  --dur-float: 9s;
 
   /* --- Z-index ------------------------------------------------------------ */
   --z-bg: 0;
@@ -185,8 +187,7 @@
 
   /* ===========================================================================
      COUCHE 2 — RÔLES SÉMANTIQUES (invariants, consommés par les composants)
-     L'accent ACTIF par défaut = identité flotte (Moodioos lead).
-     Rebindé par [data-bot="…"] plus bas. Un composant ne lit que --accent-*.
+     Accent par défaut = identité flotte (Moodioos lead), rebindé par [data-bot].
      =========================================================================== */
   --accent-100: var(--bot-moodioos-100);
   --accent-200: var(--bot-moodioos-200);
@@ -196,19 +197,18 @@
   --accent-ink: var(--bot-moodioos-ink);
   --bot-blob: var(--r-blob);
 
-  /* Lueur accent diffuse — dérivée du rôle, donc suit le bot actif. */
-  --glow-accent: 0 18px 48px -12px var(--accent-300);
+  /* Lueur accent — discrète dans la direction minimale. */
+  --glow-accent: 0 12px 36px -16px var(--accent-300);
 
-  /* Anneau de focus accessible (toujours visible, contrasté ≥3:1 sur paper —
-     d'où --accent-600 et non -500, qui échouait pour moodioos / coverioos). */
+  /* Anneau de focus accessible (contrasté ≥3:1 sur paper via -600). */
   --ring: 0 0 0 3px var(--c-paper-0), 0 0 0 5.5px var(--accent-600);
 }
 
 /* =============================================================================
    COUCHE 3 — VARIANTES D'ACCENT PAR BOT
-   Poser data-bot="moodioos|renamioos|coverioos|collabioos" sur n'importe quel
-   conteneur (souvent <html>) pour réétiqueter --accent-* + --bot-blob dans son
-   sous-arbre. --bot-blob est la forme organique SIGNATURE de chaque bot.
+   Poser data-bot="moodioos|renamioos|coverioos|collabioos" sur un conteneur
+   (souvent <html>) réétiquette --accent-* dans son sous-arbre. --bot-blob est
+   désormais un rayon net commun (plus de forme organique signature).
    ============================================================================= */
 [data-bot="moodioos"] {
   --accent-100: var(--bot-moodioos-100);
@@ -217,8 +217,7 @@
   --accent-500: var(--bot-moodioos-500);
   --accent-600: var(--bot-moodioos-600);
   --accent-ink: var(--bot-moodioos-ink);
-  /* goutte ronde et joviale — humeur / canard */
-  --bot-blob: 58% 42% 46% 54% / 56% 50% 50% 44%;
+  --bot-blob: var(--r-lg);
 }
 [data-bot="renamioos"] {
   --accent-100: var(--bot-renamioos-100);
@@ -227,8 +226,7 @@
   --accent-500: var(--bot-renamioos-500);
   --accent-600: var(--bot-renamioos-600);
   --accent-ink: var(--bot-renamioos-ink);
-  /* pétale étiré — lettres stylisées */
-  --bot-blob: 38% 62% 63% 37% / 41% 44% 56% 59%;
+  --bot-blob: var(--r-lg);
 }
 [data-bot="coverioos"] {
   --accent-100: var(--bot-coverioos-100);
@@ -237,8 +235,7 @@
   --accent-500: var(--bot-coverioos-500);
   --accent-600: var(--bot-coverioos-600);
   --accent-ink: var(--bot-coverioos-ink);
-  /* galet asymétrique — masque / mystère undercover */
-  --bot-blob: 64% 36% 33% 67% / 60% 63% 37% 40%;
+  --bot-blob: var(--r-lg);
 }
 [data-bot="collabioos"] {
   --accent-100: var(--bot-collabioos-100);
@@ -247,6 +244,15 @@
   --accent-500: var(--bot-collabioos-500);
   --accent-600: var(--bot-collabioos-600);
   --accent-ink: var(--bot-collabioos-ink);
-  /* feuille — pousse / collaboration */
-  --bot-blob: 50% 50% 30% 70% / 55% 48% 52% 45%;
+  --bot-blob: var(--r-lg);
+}
+
+/* Respect de prefers-reduced-motion : neutralise les animations non essentielles. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

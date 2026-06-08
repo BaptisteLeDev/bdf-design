@@ -62,46 +62,29 @@ const {
     padding: var(--sp-6);
     background: var(--c-paper-0);
     border: 1px solid var(--c-line);
-    border-radius: var(--r-lg);
-    box-shadow: var(--shadow-sm);
+    border-radius: var(--r-md);
+    box-shadow: none;
     overflow: hidden;
     isolation: isolate;
     transition: transform var(--dur-base) var(--ease-soft),
-      box-shadow var(--dur-base) var(--ease-soft),
       border-color var(--dur-base);
     will-change: transform;
   }
-  .bdf-bot-card::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: auto -30% -40% auto;
-    width: 60%;
-    aspect-ratio: 1;
-    background: radial-gradient(circle at 30% 30%, var(--accent-100), transparent 70%);
-    opacity: 0.9;
-    transition: transform var(--dur-slow) var(--ease-soft), opacity var(--dur-base);
-  }
   .bdf-bot-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--accent-200);
+    transform: translateY(-2px);
+    border-color: var(--c-ink-900);
   }
-  .bdf-bot-card:hover::before { transform: translate(-12%, -10%) scale(1.15); opacity: 1; }
 
   .bdf-bot-card__shape {
-    width: 60px;
-    height: 60px;
+    width: 52px;
+    height: 52px;
     border-radius: var(--bot-blob);
-    background: linear-gradient(145deg, var(--accent-300), var(--accent-500));
-    box-shadow: var(--shadow-md), inset 0 2px 4px rgba(255, 255, 255, 0.4);
+    background: var(--accent-500);
+    color: #fff;
     display: grid;
     place-items: center;
-    font-size: 1.6rem;
-    transition: border-radius var(--dur-slow) var(--ease-spring),
-      transform var(--dur-base) var(--ease-spring);
+    font-size: 1.5rem;
   }
-  .bdf-bot-card:hover .bdf-bot-card__shape { transform: rotate(-6deg) scale(1.06); }
 
   .bdf-bot-card__name {
     font-size: var(--fs-xl);
