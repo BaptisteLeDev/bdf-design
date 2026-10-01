@@ -14,7 +14,7 @@ npm-debug.log*
 bun-debug.log*
 
 # Lockfiles (package consommé via file:/github:, on garde le lock du playground hors VCS)
-# bun.lockb conservé seulement si on fige le playground — ignoré par défaut.
+# bun.lockb conservé seulement si on fige le playground - ignoré par défaut.
 bun.lockb
 pnpm-lock.yaml
 package-lock.json
@@ -25,7 +25,7 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Secrets — jamais committer
+# Secrets - jamais committer
 .env
 .env.*
 !.env.example

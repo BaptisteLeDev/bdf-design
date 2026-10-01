@@ -110,9 +110,9 @@ ambient, anneau de focus, `.bdf-reveal`).
 
 | Prop          | Type                                                    | Défaut       | Rôle                                   |
 | ------------- | ------------------------------------------------------- | ------------ | -------------------------------------- |
-| `title`       | `string` **(requis)**                                   | —            | `<title>` du document                  |
-| `description` | `string`                                                | —            | meta description                       |
-| `bot`         | `"moodioos"\|"renamioos"\|"coverioos"\|"collabioos"`    | —            | accent global de la page               |
+| `title`       | `string` **(requis)**                                   | -            | `<title>` du document                  |
+| `description` | `string`                                                | -            | meta description                       |
+| `bot`         | `"moodioos"\|"renamioos"\|"coverioos"\|"collabioos"`    | -            | accent global de la page               |
 | `lang`        | `string`                                                | `"fr"`       | langue du document                     |
 | `ambient`     | `boolean`                                               | `true`       | halo de lumière de fond                |
 | `bodyClass`   | `string`                                                | `""`         | classes additionnelles sur `<body>`    |
@@ -125,12 +125,12 @@ Barre sticky, ombre/bordure au scroll (script vanilla inline).
 
 | Prop          | Type                                              | Défaut                     |
 | ------------- | ------------------------------------------------- | -------------------------- |
-| `brand`       | `string` **(requis)**                             | —                          |
-| `brandSuffix` | `string`                                          | —                          |
+| `brand`       | `string` **(requis)**                             | -                          |
+| `brandSuffix` | `string`                                          | -                          |
 | `href`        | `string`                                          | `"/"`                      |
-| `glyph`       | `string`                                          | — (sinon marque flotte)    |
+| `glyph`       | `string`                                          | - (sinon marque flotte)    |
 | `links`       | `{ label, href, current? }[]`                     | `[]`                       |
-| `cta`         | `{ label, href }`                                 | —                          |
+| `cta`         | `{ label, href }`                                 | -                          |
 | `ctaVariant`  | `"solid" \| "ghost"`                              | `"solid"`                  |
 | `ariaLabel`   | `string`                                          | `"Navigation principale"`  |
 
@@ -138,14 +138,14 @@ Barre sticky, ombre/bordure au scroll (script vanilla inline).
 
 | Prop          | Type                                                | Défaut |
 | ------------- | --------------------------------------------------- | ------ |
-| `brand`       | `string` **(requis)**                               | —      |
-| `brandSuffix` | `string`                                            | —      |
+| `brand`       | `string` **(requis)**                               | -      |
+| `brandSuffix` | `string`                                            | -      |
 | `href`        | `string`                                            | `"/"`  |
-| `glyph`       | `string`                                            | —      |
-| `tagline`     | `string`                                            | —      |
+| `glyph`       | `string`                                            | -      |
+| `tagline`     | `string`                                            | -      |
 | `columns`     | `{ title, links: { label, href }[] }[]`             | `[]`   |
-| `legal`       | `string`                                            | —      |
-| `version`     | `string`                                            | —      |
+| `legal`       | `string`                                            | -      |
+| `version`     | `string`                                            | -      |
 
 ### `components/Hero.astro`
 
@@ -153,7 +153,7 @@ En-tête deux colonnes. Sans slot `visual`, passe en pleine largeur centrée.
 
 | Prop         | Type                       | Défaut      |
 | ------------ | -------------------------- | ----------- |
-| `overline`   | `string`                   | —           |
+| `overline`   | `string`                   | -           |
 | `titleStyle` | `"default" \| "gradient"`  | `"default"` |
 | `align`      | `"start" \| "center"`      | `"start"`   |
 
@@ -166,10 +166,10 @@ Carte de bot. **Pose elle-même `data-bot={bot}`** : l'intérieur hérite de la 
 
 | Prop    | Type                                                  | Défaut       |
 | ------- | ----------------------------------------------------- | ------------ |
-| `bot`   | `"moodioos"\|"renamioos"\|"coverioos"\|"collabioos"` **(requis)** | — |
-| `name`  | `string` **(requis)**                                 | —            |
-| `tag`   | `string`                                              | —            |
-| `glyph` | `string` **(requis)**                                 | —            |
+| `bot`   | `"moodioos"\|"renamioos"\|"coverioos"\|"collabioos"` **(requis)** | - |
+| `name`  | `string` **(requis)**                                 | -            |
+| `tag`   | `string`                                              | -            |
+| `glyph` | `string` **(requis)**                                 | -            |
 | `href`  | `string`                                              | `"#"`        |
 | `cta`   | `string`                                              | `"Explorer"` |
 | `soon`  | `boolean`                                             | `false`      |
@@ -180,19 +180,19 @@ Slot : default (description).
 
 | Prop         | Type                  | Défaut | Rôle                                              |
 | ------------ | --------------------- | ------ | ------------------------------------------------- |
-| `value`      | `string` **(requis)** | —      | chiffre principal (placeholder si valeur live)    |
-| `unit`       | `string`              | —      | suffixe accentué (ex. `k`, `M`, `%`)              |
-| `label`      | `string`              | —      | libellé sous le chiffre                           |
-| `overline`   | `string`              | —      | sur-titre mono                                    |
-| `valueId`    | `string`              | —      | `id` sur le chiffre, pour injection live (client) |
-| `overlineKey`| `string`              | —      | `data-i18n` sur le sur-titre (hook i18n client)   |
+| `value`      | `string` **(requis)** | -      | chiffre principal (placeholder si valeur live)    |
+| `unit`       | `string`              | -      | suffixe accentué (ex. `k`, `M`, `%`)              |
+| `label`      | `string`              | -      | libellé sous le chiffre                           |
+| `overline`   | `string`              | -      | sur-titre mono                                    |
+| `valueId`    | `string`              | -      | `id` sur le chiffre, pour injection live (client) |
+| `overlineKey`| `string`              | -      | `data-i18n` sur le sur-titre (hook i18n client)   |
 
 ### `components/CommandCard.astro`
 
 | Prop    | Type                  | Défaut |
 | ------- | --------------------- | ------ |
-| `name`  | `string` **(requis)** | —      |
-| `glyph` | `string` **(requis)** | —      |
+| `name`  | `string` **(requis)** | -      |
+| `glyph` | `string` **(requis)** | -      |
 
 Slot : default (description). À placer dans un `<CommandGrid>`.
 
@@ -210,8 +210,8 @@ Bandeau accent. Texte en `--accent-ink` (AA garanti).
 
 | Prop       | Type                  | Défaut |
 | ---------- | --------------------- | ------ |
-| `overline` | `string`              | —      |
-| `title`    | `string` **(requis)** | —      |
+| `overline` | `string`              | -      |
+| `title`    | `string` **(requis)** | -      |
 | `decor`    | `boolean`             | `true` |
 
 Slots : `lead`, `actions`.
@@ -222,7 +222,7 @@ Couleur **sémantique** (verte / ambre / rouge), jamais l'accent du bot.
 
 | Prop     | Type                          | Défaut             |
 | -------- | ----------------------------- | ------------------ |
-| `status` | `"up"\|"degraded"\|"down"` **(requis)** | —        |
+| `status` | `"up"\|"degraded"\|"down"` **(requis)** | -        |
 | `label`  | `string`                      | libellé par défaut |
 | `pulse`  | `boolean`                     | `true`             |
 
@@ -261,5 +261,5 @@ bun run preview    # sert le build de dist/
 
 ## Voir aussi
 
-- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — les 3 couches de tokens, le mécanisme
+- [`ARCHITECTURE.md`](./ARCHITECTURE.md) - les 3 couches de tokens, le mécanisme
   `[data-bot]`, les invariants et la procédure pour **ajouter un bot**.

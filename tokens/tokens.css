@@ -1,19 +1,19 @@
 /* =============================================================================
-   @bdf/design — TOKENS
+   @bdf/design - TOKENS
    Direction artistique : « Neo-grotesque minimal ».
    Base neutre quasi-monochrome (encre presque noire sur papier blanc cassé),
    typographie neo-grotesque à fort contraste de graisse, ornement réduit
-   (plus de blobs organiques signatures — formes nettes, rayons serrés), ombres
+   (plus de blobs organiques signatures - formes nettes, rayons serrés), ombres
    discrètes, accent unique par bot conservé mais employé avec parcimonie.
    Deux familles web : Space Grotesk (display) + Geist (corps/UI). Le mono
    retombe sur une stack système (aucune 3e police chargée).
 
    TROIS COUCHES (cf. ARCHITECTURE.md) :
-     1. PRIMITIVES   — la matière brute (neutres, rampes par bot, fontes, échelle…).
-     2. RÔLES        — les sémantiques invariantes que les composants consomment
+     1. PRIMITIVES   - la matière brute (neutres, rampes par bot, fontes, échelle…).
+     2. RÔLES        - les sémantiques invariantes que les composants consomment
                        (--accent-*, --c-ink-*, --shadow-*…). On ne lit JAMAIS une
                        primitive de bot directement dans un composant.
-     3. VARIANTES    — [data-bot="…"] rebinde --accent-*. Le reste est invariant.
+     3. VARIANTES    - [data-bot="…"] rebinde --accent-*. Le reste est invariant.
 
    Invariant dur : AUCUNE couleur en dur hors de ce fichier. Contraste AA garanti
    par les paliers -600 (texte sur paper-0/-50/-100) et -ink (texte sur surface
@@ -22,23 +22,23 @@
 
 :root {
   /* ===========================================================================
-     COUCHE 1 — PRIMITIVES
+     COUCHE 1 - PRIMITIVES
      =========================================================================== */
 
   /* --- Neutres (gris neutre froid léger, pas de teinte chaude) ------------- */
-  --c-ink-900: #0e0e11;   /* texte principal — off-black */
+  --c-ink-900: #0e0e11;   /* texte principal - off-black */
   --c-ink-700: #28282d;   /* titres secondaires */
   --c-ink-500: #54545b;   /* corps de texte (AA sur paper) */
   --c-ink-400: #6c6c74;   /* texte tertiaire, légendes (AA sur paper) */
   --c-ink-300: #a0a0a8;   /* placeholder, désactivé */
 
   --c-paper-0:  #ffffff;  /* surface la plus haute (cartes en avant-plan) */
-  --c-paper-50: #f6f6f7;  /* fond de page — blanc cassé neutre */
+  --c-paper-50: #f6f6f7;  /* fond de page - blanc cassé neutre */
   --c-paper-100:#eeeef0;  /* surfaces légèrement enfoncées */
   --c-paper-200:#e2e2e6;  /* bordures douces, séparateurs */
   --c-line:     #e7e7ea;  /* hairlines */
 
-  /* Halos de lumière de fond — très subtils, neutres tirant vers l'accent.
+  /* Halos de lumière de fond - très subtils, neutres tirant vers l'accent.
      Conservés (noms stables) mais quasi imperceptibles dans la direction minimale. */
   --c-glow-pink: #f7eeef;
   --c-glow-peach:#f6efec;
@@ -49,7 +49,7 @@
      Accent par bot conservé (variantes), employé par petites touches sur la
      base neutre. Paliers -600 garantis AA sur paper clair, -ink sur surface -100. */
 
-  /* Moodioos — bien-être / humeur — corail */
+  /* Moodioos - bien-être / humeur - corail */
   --bot-moodioos-100: #ffe9e6;
   --bot-moodioos-200: #ffcfc8;
   --bot-moodioos-300: #fba99c;
@@ -57,7 +57,7 @@
   --bot-moodioos-600: #b8443a;  /* AA ≥4.5:1 sur paper-0/-50/-100 */
   --bot-moodioos-ink: #6e261f;
 
-  /* ReNamioos — stylisation Unicode — violet */
+  /* ReNamioos - stylisation Unicode - violet */
   --bot-renamioos-100: #efe6f7;
   --bot-renamioos-200: #ddc9ee;
   --bot-renamioos-300: #c2a2df;
@@ -65,7 +65,7 @@
   --bot-renamioos-600: #794aa6;  /* AA ≥4.5:1 */
   --bot-renamioos-ink: #45286a;
 
-  /* Coverioos — Undercover (jeu) — ambre */
+  /* Coverioos - Undercover (jeu) - ambre */
   --bot-coverioos-100: #fbeecc;
   --bot-coverioos-200: #f6db9b;
   --bot-coverioos-300: #eec153;
@@ -73,7 +73,7 @@
   --bot-coverioos-600: #8c640f;  /* AA ≥4.5:1 */
   --bot-coverioos-ink: #553c08;
 
-  /* Collabioos — collab streamers — vert */
+  /* Collabioos - collab streamers - vert */
   --bot-collabioos-100: #e4f0e1;
   --bot-collabioos-200: #c9e1c2;
   --bot-collabioos-300: #9cc78f;
@@ -99,16 +99,16 @@
      obtenus via font-variant-numeric côté composants data. */
   --font-mono: ui-monospace, "SF Mono", "Geist Mono", "JetBrains Mono", monospace;
 
-  --fs-2xs: 0.694rem;  /* 11px — overline, labels minuscules */
-  --fs-xs:  0.833rem;  /* 13px — légendes */
-  --fs-sm:  0.9375rem; /* 15px — UI secondaire */
-  --fs-md:  1rem;      /* 16px — corps */
-  --fs-lg:  1.2rem;    /* ~19px — chapeau */
-  --fs-xl:  1.5rem;    /* 24px — titres de carte */
-  --fs-2xl: 1.953rem;  /* ~31px — sous-titres section */
-  --fs-3xl: 2.625rem;  /* 42px — titres section */
-  --fs-4xl: 3.5rem;    /* 56px — hero secondaire */
-  --fs-5xl: 5rem;      /* 80px — hero display */
+  --fs-2xs: 0.694rem;  /* 11px - overline, labels minuscules */
+  --fs-xs:  0.833rem;  /* 13px - légendes */
+  --fs-sm:  0.9375rem; /* 15px - UI secondaire */
+  --fs-md:  1rem;      /* 16px - corps */
+  --fs-lg:  1.2rem;    /* ~19px - chapeau */
+  --fs-xl:  1.5rem;    /* 24px - titres de carte */
+  --fs-2xl: 1.953rem;  /* ~31px - sous-titres section */
+  --fs-3xl: 2.625rem;  /* 42px - titres section */
+  --fs-4xl: 3.5rem;    /* 56px - hero secondaire */
+  --fs-5xl: 5rem;      /* 80px - hero display */
 
   --lh-tight: 1.0;
   --lh-snug: 1.14;
@@ -186,7 +186,7 @@
   --z-nav: 100;
 
   /* ===========================================================================
-     COUCHE 2 — RÔLES SÉMANTIQUES (invariants, consommés par les composants)
+     COUCHE 2 - RÔLES SÉMANTIQUES (invariants, consommés par les composants)
      Accent par défaut = identité flotte (Moodioos lead), rebindé par [data-bot].
      =========================================================================== */
   --accent-100: var(--bot-moodioos-100);
@@ -197,7 +197,7 @@
   --accent-ink: var(--bot-moodioos-ink);
   --bot-blob: var(--r-blob);
 
-  /* Lueur accent — discrète dans la direction minimale. */
+  /* Lueur accent - discrète dans la direction minimale. */
   --glow-accent: 0 12px 36px -16px var(--accent-300);
 
   /* Anneau de focus accessible (contrasté ≥3:1 sur paper via -600). */
@@ -205,7 +205,7 @@
 }
 
 /* =============================================================================
-   COUCHE 3 — VARIANTES D'ACCENT PAR BOT
+   COUCHE 3 - VARIANTES D'ACCENT PAR BOT
    Poser data-bot="moodioos|renamioos|coverioos|collabioos" sur un conteneur
    (souvent <html>) réétiquette --accent-* dans son sous-arbre. --bot-blob est
    désormais un rayon net commun (plus de forme organique signature).

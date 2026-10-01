@@ -1,6 +1,6 @@
 ---
 /**
- * Nav — barre de navigation sticky, ombre/bordure au scroll.
+ * Nav - barre de navigation sticky, ombre/bordure au scroll.
  *
  * Le marqueur de marque (`brand__mark`) adopte la forme `--bot-blob` et l'accent
  * du bot actif. Sans `glyph`, il affiche un dégradé multi-bots (identité flotte).
@@ -164,14 +164,14 @@ const ctaIsExternal = ctaExternal ?? isExternal(cta?.href);
     .bdf-nav__links { gap: var(--sp-6); }
   }
   /* Très petits écrans : on masque le mark de marque texte au profit du glyphe
-     si l'espace manque — mais on garde brand + lien(s) + CTA accessibles. */
+     si l'espace manque - mais on garde brand + lien(s) + CTA accessibles. */
   @media (max-width: 360px) {
     .bdf-nav__links { gap: var(--sp-3); font-size: var(--fs-xs); }
   }
 </style>
 
 <script>
-  // Ombre/bordure au scroll — vanilla, idempotent, sans dépendance.
+  // Ombre/bordure au scroll - vanilla, idempotent, sans dépendance.
   (() => {
     const nav = document.querySelector<HTMLElement>("[data-bdf-nav]");
     if (!nav) return;

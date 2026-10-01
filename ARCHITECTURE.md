@@ -1,4 +1,4 @@
-# Architecture — @bdf/design
+# Architecture - @bdf/design
 
 Ce document décrit la structure interne du design system : les **trois couches de
 tokens**, le **mécanisme `[data-bot]`**, les **invariants** non négociables et la
@@ -33,7 +33,7 @@ contexte `[data-bot]` (couche 3) qui réétiquette les rôles autour d'eux.
 
 Tout vit dans `tokens/tokens.css`, organisé en trois couches strictement ordonnées.
 
-### Couche 1 — Primitives
+### Couche 1 - Primitives
 
 La matière brute, jamais consommée directement par un composant :
 
@@ -49,7 +49,7 @@ La matière brute, jamais consommée directement par un composant :
   `-text` (AA sur son `-100`) et `-100` (surface).
 - **Typo / espacement / rayons / ombres / motion / z-index** : échelles partagées.
 
-### Couche 2 — Rôles sémantiques
+### Couche 2 - Rôles sémantiques
 
 Les variables **invariantes** que les composants consomment. Au niveau `:root`, elles
 pointent vers le bot « lead » (Moodioos) :
@@ -63,7 +63,7 @@ pointent vers le bot « lead » (Moodioos) :
 
 Un composant écrit `background: var(--accent-500)`, jamais `var(--bot-moodioos-500)`.
 
-### Couche 3 — Variantes `[data-bot]`
+### Couche 3 - Variantes `[data-bot]`
 
 Quatre sélecteurs `[data-bot="<id>"]` **réétiquettent** la couche 2 dans leur sous-arbre :
 
@@ -140,7 +140,7 @@ les composants sont des consommateurs purs.
 
 Procédure complète (exemple fictif `pollioos`, accent « bleu ciel ») :
 
-1. **Tokens — couche 1** : ajouter la rampe dans `tokens/tokens.css`, section *Rampes par
+1. **Tokens - couche 1** : ajouter la rampe dans `tokens/tokens.css`, section *Rampes par
    bot* :
    ```css
    --bot-pollioos-100: …; --bot-pollioos-200: …; --bot-pollioos-300: …;
@@ -150,13 +150,13 @@ Procédure complète (exemple fictif `pollioos`, accent « bleu ciel ») :
    Désaturer le pastel d'origine juste assez pour le premium, rester chaud/cohérent.
 2. **Vérifier le contraste** : `-600` ≥ 4.5:1 sur `--c-paper-0`, `-ink` ≥ 4.5:1 sur
    `-300`. Ajuster les valeurs jusqu'à validation (ne pas « tricher » l'invariant 2).
-3. **Tokens — couche 3** : ajouter le bloc `[data-bot="pollioos"]` qui rebinde
+3. **Tokens - couche 3** : ajouter le bloc `[data-bot="pollioos"]` qui rebinde
    `--accent-*` + définit `--bot-blob` (la forme signature propre au bot).
 4. **Types** : étendre l'union `"moodioos"|"renamioos"|"coverioos"|"collabioos"` dans
    `Base.astro` et `BotCard.astro` (et tout endroit qui la déclare).
 5. **Doc** : ligne dans le tableau des accents du `README.md`.
 6. **Playground** : ajouter une entrée au tableau `bots` de
-   `playground/src/pages/index.astro` — la démo le couvrira automatiquement.
+   `playground/src/pages/index.astro` - la démo le couvrira automatiquement.
 7. **Build** : `cd playground && bun run build` doit passer.
 
 Aucun composant n'a besoin d'être modifié : ils consomment déjà `--accent-*` / `--bot-blob`.
